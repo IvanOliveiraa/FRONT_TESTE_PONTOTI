@@ -161,7 +161,7 @@ export function Atendimentos () {
                 
                 <h6 style={{margin:"10px 0px 0px 10px"}}>Aguardando confirmação </h6>
                 <div>
-                    {Array.from(Array(pages),(item,index)=>{
+                {Array.from(Array(pages),(item,index)=>{
                       return<button>{index}</button>
                     })}
                   </div>

@@ -1,6 +1,7 @@
 import {  React } from 'react';
 import {  Button } from 'reactstrap';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 
 const Container1 = styled.div`
@@ -17,18 +18,18 @@ const Container1 = styled.div`
 const Voltar = () => {
     
 
-   
+    let navigate= useNavigate();
         return (<>
         
             <Container1 style={{margin:'100px'}}>
-            <div style={{ }}>
+            <div style={{ color:'white'}}>
     </div>
                 <hr  className="my-3"/>
                 
-                <h1>
+                <h1 style={{ color:'white'}}>
                     Pagina não autorizada
                 </h1>
-                <Button> Voltar </Button>
+                <Button onClick={navigate("/")}> Voltar </Button>
             </Container1>
            
             </>);

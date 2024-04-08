@@ -44,13 +44,13 @@ const Sidebar = () => (
      </div>
   <Nav vertical >
 
-    <Botao>
+    <a>
   <Link to="/">  
     <NavItem>     
         Home
     </NavItem>
   </Link>
-    </Botao>
+    </a>
 
     <Botao>
       <Link to="/atendimentos">

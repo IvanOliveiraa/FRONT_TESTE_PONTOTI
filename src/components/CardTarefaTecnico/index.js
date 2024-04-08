@@ -17,7 +17,7 @@ const ContainerCard = styled.li`{
   
   text-decoration: none;
   border-radius: 5px;
-  background: ${(props)=>(props.prioridade?"#1a1a1a":"#1a1a1a")};
+  background: ${(props) => (props.prioridade ? "#1a1a1a" : "#1a1a1a")};
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   
   
@@ -61,7 +61,7 @@ const Footercard = styled.div`{
   }
 
 }`;
-const BotaoFooter=styled.button`{
+const BotaoFooter = styled.button`{
   border:none;
   background:#292c2e;
   cursor: pointer;
@@ -81,7 +81,7 @@ const BotaoFooter=styled.button`{
     }
   
 }`;
-const BotaoFooter2=styled.button`{
+const BotaoFooter2 = styled.button`{
   border:none;
   width:90%;
   border-radius: 5px;
@@ -102,35 +102,36 @@ const BotaoFooter2=styled.button`{
 }`;
 
 
-const CardTarefaTecnico = ({id_atendimento,id_tarefa, servico, status_tarefa, nome_cliente, nome_usuario,data, hora, prioridade, horario_conclusao1,conclusao1,revisada }) => {
+const CardTarefaTecnico = ({ id_atendimento, id_tarefa, servico, status_tarefa, nome_cliente, nome_usuario, data, hora, prioridade, horario_conclusao1, conclusao1, revisada }) => {
 
 
-  
-  return(
-    <ContainerCard  prioridade={prioridade} > 
-        <HeaderCard>
-       {servico}
-        </HeaderCard>
-        <Bodycard>
+
+  return (
+    <ContainerCard prioridade={prioridade} >
+      <HeaderCard>
+        {servico}
+      </HeaderCard>
+      <Bodycard>
         <p>
-        
-        #{id_atendimento}-{nome_cliente} <br/>
-        {moment(data).format(' DD / MM / YYYY')}<br/>
-        {hora.substr(0, 5)}<br/>
-        
-        {status_tarefa} <br/>
+
+          #{id_atendimento}-{nome_cliente} <br />
+          {moment(data).format(' DD / MM / YYYY')}<br />
+          {hora.substr(0, 5)}<br />
+
+          {status_tarefa} <br />
         </p>
-        </Bodycard>
-        <Footercard>
-          
+      </Bodycard>
+      <Footercard>
+
         <BotaoFooter>
-            <IoReceiptSharp/>
-          </BotaoFooter>
-        <BotaoConcluir id1={id_tarefa}  horario_conclusao2={horario_conclusao1} conclusao2={conclusao1} nivel={"tecnico"}/>
-        </Footercard>
-        
+          <IoReceiptSharp />
+        </BotaoFooter>
+        <BotaoConcluir id1={id_tarefa} horario_conclusao2={horario_conclusao1} conclusao2={conclusao1} nivel={"tecnico"} />
+      </Footercard>
+
     </ContainerCard>
-)};
+  )
+};
 
 export default CardTarefaTecnico;
 

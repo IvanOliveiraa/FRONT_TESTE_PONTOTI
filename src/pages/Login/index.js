@@ -1,4 +1,4 @@
-import {  useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, FormGroup, Button, Alert } from 'reactstrap';
 
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ color: #d9d4cc;
 font-size: 16px;
     `;
 
-    const Input1 = styled.input`
+const Input1 = styled.input`
     color:#d9d4cc;
     font-size: 1rem;
     width: 100%;
@@ -44,40 +44,37 @@ font-size: 16px;
 
 const Login = () => {
     let navigate = useNavigate();
-    const[email, setEmail]= useState('');
-    const[senha, setSenha]= useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const[erro, SetErro]= useState('');
+    const [erro, SetErro] = useState('');
 
 
 
-    useEffect(()=>{
-            if(localStorage.getItem('token') != null) {
-                console.log("redirecionou") ;
-                var nivel = localStorage.getItem('nivel');
+    useEffect(() => {
+        if (localStorage.getItem('token') != null) {
+            console.log("redirecionou");
+            var nivel = localStorage.getItem('nivel');
 
-                if(nivel === 'administrador'){
+            if (nivel === 'administrador') {
                 navigate("/atendimentos");
-                }
-                else if(nivel === 'administrativo'){
-                    navigate("/atendimentos");
-                    }
-                else if(nivel === 'tecnico'){
-                    navigate("/atendimentostecnico");
-                    }
-                
-            }else{
-                
-                console.log("não redirecionou") ;
             }
-            },[])
-   
-  const  signIn =async(e) => {
-       
-    
-    
+            else if (nivel === 'administrativo') {
+                navigate("/atendimentos");
+            }
+            else if (nivel === 'tecnico') {
+                navigate("/atendimentostecnico");
+                window.location.reload()
+            }
 
-        const data = { email, senha };
+        } else {
+
+            console.log("não redirecionou");
+        }
+    }, [])
+
+    const signIn = async (e) => {
+        const data = { email: email, senha: senha };
         const requestInfo = {
             method: 'POST',
             body: JSON.stringify(data),
@@ -87,59 +84,67 @@ const Login = () => {
         };
 
         await fetch(`${Config.backend}/login`, requestInfo)
-        .then(response => {
-            if(response.ok) {
-                var result = response.json();
-                return result;     
-            }
-            
-            throw new Error("Falha na autenticação");
-        })
-        .then(token => {       
-            var accessToken = token.token;
-            localStorage.setItem('token', accessToken);
-            var nivel = token.nivel;
-            localStorage.setItem('nivel', nivel);
-            var id = token.id;
-            localStorage.setItem('id_usuario', id);
-                     
-             return;
-    
-        })
-        .catch(message => {
-            setEmail('');
-            setSenha('');
-            SetErro ({ message });
-            
-                }); 
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error("Falha na autenticação");
+            })
+            .then(token => {
+                localStorage.setItem('token', token);
+                console.log(token);
+                var accessToken = token.token;
+                localStorage.setItem('token', accessToken);
+                var nivel = token.nivel;
+                localStorage.setItem('nivel', nivel);
+                var id = token.id;
+                localStorage.setItem('id_usuario', id);
+                if (nivel === 'administrador') {
+                    window.location.reload();
+                    navigate("/atendimentos");
+                }
+                else if (nivel === 'administrativo') {
+                    window.location.reload();
+                    navigate("/atendimentos");
+                }
+                else if (nivel === 'tecnico') {
+                    window.location.reload();
+                    navigate("/atendimentostecnico");
+                }
+                return;
+            })
+            .catch(e => {
+                setErrMsg(e.message);
+                console.log(errMsg);
+            });
     }
 
-   
-        return (<>
-        
-            <Container1 style={{margin:'100px'}}>
-            <div style={{ }}>
-     <img src={require('../../assets/logo.png')}style={{display:'block',margin:'0px auto 0px auto', width:'60%',}}></img>
-     </div>
-                <hr  className="my-3"/>
-                {
-                    erro !== '' ? (
-                        <Alert color="danger" className="text-center"> {erro} </Alert>
-                    ) : ''
-                }
-                <Form onSubmit={signIn}>
-                    <FormGroup>
-                        <Label1 for="email">Email</Label1>
-                        <Input1 type="text" id="email" onChange={e => setEmail (e.target.value)} value={email}placeholder="Informe seu e-mail" />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label1 for="password">Senha</Label1>
-                        <Input1 type="password" id="senha" onChange={e => setSenha (e.target.value)} value={senha}placeholder="Informe a senha" />
-                    </FormGroup>
-                    <Button color="primary" block > Entrar </Button>
-                </Form>
-            </Container1>
-           
-            </>);
-    }
-    export default Login
+
+    return (<>
+
+        <Container1 style={{ margin: '100px' }}>
+            <div style={{}}>
+                <img src={require('../../assets/logo.png')} style={{ display: 'block', margin: '0px auto 0px auto', width: '60%', }}></img>
+            </div>
+            <hr className="my-3" />
+            {
+                erro !== '' ? (
+                    <Alert color="danger" className="text-center"> {erro} </Alert>
+                ) : ''
+            }
+            <Form >
+                <FormGroup>
+                    <Label1 for="email">Email</Label1>
+                    <Input1 type="text" id="email" onChange={e => setEmail(e.target.value)} value={email} placeholder="Informe seu e-mail" />
+                </FormGroup>
+                <FormGroup>
+                    <Label1 for="password">Senha</Label1>
+                    <Input1 type="password" id="senha" onChange={e => setSenha(e.target.value)} value={senha} placeholder="Informe a senha" />
+                </FormGroup>
+                <Button color="primary" onClick={signIn} block > Entrar </Button>
+            </Form>
+        </Container1>
+
+    </>);
+}
+export default Login

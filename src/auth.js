@@ -21,7 +21,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
         <Route 
             {...rest}
             render={props => 
-            isAuth() ? (
+            !isAuth() ? (
                 <Component {...props} />
             ): (
                 <Navigate 
