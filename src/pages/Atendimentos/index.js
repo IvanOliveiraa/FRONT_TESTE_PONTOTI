@@ -1,5 +1,5 @@
-import React, { useMemo, useEffect, useState } from 'react';
-import {   useNavigate } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Sidebar from '../../components/Sidebar';
 import Topbar from '../../components/Topbar';
@@ -73,7 +73,7 @@ color: white;
     background: #f27018; 
 }
 `}*/
-const ContainerTop= styled.div`{
+const ContainerTop = styled.div`{
   margin: 5px 10px 5px 10px;
   grid-column: 1 / 6;
 display: grid;
@@ -88,7 +88,7 @@ color: #d9d4cc;
 font-size: 16px;
 }`;}*/
 
-    const Input1 = styled.input`{
+const Input1 = styled.input`{
       float:right;
     color:#d9d4cc;
     font-size: 1rem;
@@ -108,95 +108,95 @@ font-size: 16px;
     }
       }
     `;
-    
 
 
-export function Atendimentos () {
+
+export function Atendimentos() {
 
   let navigate = useNavigate();
-  const {nivel}=useAuth();
+  const { nivel } = useAuth();
 
-  
-  const{data}= useAxios('/atendimentos');
-  
 
-  const datas = useMemo(()=>{
-    return    data || [];
-  },[data])
+  const { data } = useAxios('/atendimentos');
+
+
+  const datas = useMemo(() => {
+    return data || [];
+  }, [data])
 
   const itensPorPagina = (20);
-  const [currentPage,setCurrentPage]=useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const pages= Math.ceil(datas.length / itensPorPagina);
+  const pages = Math.ceil(datas.length / itensPorPagina);
   const StartIndex = (currentPage * itensPorPagina);
   const EndIndex = (StartIndex + itensPorPagina);
 
 
-  const aguardando = useMemo(()=>{
-    var dados=datas.filter((tarefas)=>tarefas.status_tarefa==="aguardando"||tarefas.status_tarefa==="revisado");
-    return   dados.slice(StartIndex,EndIndex);
-  },[data])
-  
+  const aguardando = useMemo(() => {
+    var dados = datas.filter((tarefas) => tarefas.status_tarefa === "aguardando" || tarefas.status_tarefa === "revisado");
+    return dados.slice(StartIndex, EndIndex);
+  }, [data])
+
   /*{const naoconcluido = useMemo(()=>{
     return datas.filter((tarefas)=>tarefas.status_tarefa!="concluido");
   },[data])}*/
 
-    
 
 
-        return (
-<>
-           <Sidebar/>      
 
-       <div style={{ flexDirection: "column", margin:'0px',padding:'0px', width :'100%'}}>
-         
-                <Topbar title="Atendimentos"/>
-                <ContainerTop>
-              {/*  <BotaoNovo onClick={()=>navigate("/novoatendimento")}> Novo Atendimento</BotaoNovo>*/} 
-                <BotaoAdd/>
-                <Input1 placeholder='pesquisar'/>
-                </ContainerTop>
-                <ContainerGeral>
-                
-                
-                <h6 style={{margin:"10px 0px 0px 10px"}}>Aguardando confirmação </h6>
-                <div>
+  return (
+    <>
+      <Sidebar />
+
+      <div style={{ flexDirection: "column", margin: '0px', padding: '0px', width: '100%' }}>
+
+        <Topbar title="Atendimentos" />
+        <ContainerTop>
+          {/*  <BotaoNovo onClick={()=>navigate("/novoatendimento")}> Novo Atendimento</BotaoNovo>*/}
+          <BotaoAdd />
+          <Input1 placeholder='pesquisar' />
+        </ContainerTop>
+        <ContainerGeral>
+
+
+          <h6 style={{ margin: "10px 0px 0px 10px" }}>Aguardando confirmação </h6>
+          {/* } <div>
                 {Array.from(Array(pages),(item,index)=>{
                       return<button>{index}</button>
                     })}
-                  </div>
-                <ContainerConfirmacao>
-                
-                
-                {aguardando?.map((atendimentos)=>{
-                                return(
-                                  <BotaoAtendimento onClick={()=>navigate(`/atendimento/${atendimentos.id}`)} >
-                                  <CardAtendimento  key={atendimentos.id_tarefa} id={atendimentos.id} servico={atendimentos.nome_atendimento} status={atendimentos.status} status_tarefa={atendimentos.status_tarefa} nome_cliente={atendimentos.nome_cliente} nome_usuario={atendimentos.nome} hora={atendimentos.hora} prioridade={atendimentos.prioridade} />
-                               </BotaoAtendimento> );
-                               
-                            })}
+                  </div> */}
+          <ContainerConfirmacao>
 
-                  </ContainerConfirmacao>
-                  
-                  
-                  <h6 style={{margin:"10px 0px 0px 10px"}}>Atendimentos</h6>
-                  <ContainerAtendimentos >
-                  {data?.map((atendimentos)=>{
-                                return(
-                                  <BotaoAtendimento onClick={()=>navigate(`/atendimento/${atendimentos.id}`)} >
-                                  <CardAtendimento key={atendimentos.id_tarefa} id={atendimentos.id} servico={atendimentos.nome_atendimento} status={atendimentos.status}status_tarefa={atendimentos.status_tarefa} nome_cliente={atendimentos.nome_cliente} nome_usuario={atendimentos.nome} hora={atendimentos.hora} prioridade={atendimentos.prioridade} />
-                                  </BotaoAtendimento>);
-                            })}
-                  </ContainerAtendimentos>
-                  
-                  
 
-                </ContainerGeral>
-                
-                </div>
-               
-            
-            </>
-        );
-    }
+            {aguardando?.map((atendimentos) => {
+              return (
+                <BotaoAtendimento onClick={() => navigate(`/atendimento/${atendimentos.id}`)} >
+                  <CardAtendimento key={atendimentos.id_tarefa} id={atendimentos.id} servico={atendimentos.nome_atendimento} status={atendimentos.status} status_tarefa={atendimentos.status_tarefa} nome_cliente={atendimentos.nome_cliente} nome_usuario={atendimentos.nome} hora={atendimentos.hora} prioridade={atendimentos.prioridade} />
+                </BotaoAtendimento>);
+
+            })}
+
+          </ContainerConfirmacao>
+
+
+          <h6 style={{ margin: "10px 0px 0px 10px" }}>Atendimentos</h6>
+          <ContainerAtendimentos >
+            {data?.map((atendimentos) => {
+              return (
+                <BotaoAtendimento onClick={() => navigate(`/atendimento/${atendimentos.id}`)} >
+                  <CardAtendimento key={atendimentos.id_tarefa} id={atendimentos.id} servico={atendimentos.nome_atendimento} status={atendimentos.status} status_tarefa={atendimentos.status_tarefa} nome_cliente={atendimentos.nome_cliente} nome_usuario={atendimentos.nome} hora={atendimentos.hora} prioridade={atendimentos.prioridade} />
+                </BotaoAtendimento>);
+            })}
+          </ContainerAtendimentos>
+
+
+
+        </ContainerGeral>
+
+      </div>
+
+
+    </>
+  );
+}
 export default Atendimentos

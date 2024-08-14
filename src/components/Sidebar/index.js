@@ -1,6 +1,6 @@
 import React from 'react';
-import { Nav,NavItem } from 'reactstrap';
-import {  Link } from 'react-router-dom';
+import { Nav, NavItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 
@@ -33,65 +33,72 @@ const SidebarContainer = styled.div`
 
 
 const Sidebar = () => (
-    
-    <SidebarContainer >
-      
-   <div style={{width:'160px',background: '#1a1a1a',
-  width: '160px',
-  height: '100%' }} >
-     <div>
-     <img src={require('../../assets/logo.png')}style={{width:'140px', margin:'10px 10px 10px 10px '}}></img>
-     </div>
-  <Nav vertical >
 
-    <a>
-  <Link to="/">  
+  <SidebarContainer >
+
+    <div style={{
+      width: '160px', background: '#1a1a1a',
+      height: '100%'
+    }} >
+      <div>
+        <img alt="logo" src={require('../../assets/logo.png')} style={{ width: '140px', margin: '10px 10px 10px 10px ' }}></img>
+      </div>
+      <Nav vertical >
+
+        {/* <a>
+   <Link to="/">  
     <NavItem>     
         Home
     </NavItem>
   </Link>
-    </a>
+    </a> */}
 
-    <Botao>
-      <Link to="/atendimentos">
-      <NavItem>
-        Atendimentos
-        </NavItem>
-      </Link>
-    </Botao>
+        <Botao>
+          <Link to="/atendimentos">
+            <NavItem>
+              Atendimentos
+            </NavItem>
+          </Link>
+        </Botao>
 
-    <Botao>
-      <Link to="/funcionarios">
-      <NavItem>
-        Funcionarios
-        </NavItem>
-      </Link>
-    </Botao>
+        <Botao>
+          <Link to="/funcionarios">
+            <NavItem>
+              Funcionarios
+            </NavItem>
+          </Link>
+        </Botao>
 
-    <Botao>
-      <Link to="/clientes">
-      <NavItem>
-        Clientes
-        </NavItem>
-      </Link>
-    </Botao>
+        <Botao>
+          <Link to="/clientes">
+            <NavItem>
+              Clientes
+            </NavItem>
+          </Link>
+        </Botao>
 
-    <Botao>
-      <Link to="/tipos">
-      <NavItem>
-        Tipos atendimento
-        </NavItem>
-      </Link>
-    </Botao>
+        <Botao>
+          <Link to="/tipos">
+            <NavItem>
+              Tipos atendimento
+            </NavItem>
+          </Link>
+        </Botao>
 
-    
+        <Botao>
+          <Link to="/orcamentos">
+            <NavItem>
+              Orçamentos
+            </NavItem>
+          </Link>
+        </Botao>
 
- 
-    
-  </Nav>
-  
-</div>
-    </SidebarContainer>
+
+
+      </Nav>
+
+    </div>
+  </SidebarContainer>
 );
 
 export default Sidebar;

@@ -40,7 +40,6 @@ font-size: 16px;
         border:'0.5px solid #A9A9A9',
         color :state.isFocused? 'white':'black',
         backgroundColor :state.isSelected?'#0275d8' :'#white',
-        backgroundColor :state.isFocused?'#0275d8' :'#white',
         borderColor: state.isFocused?'#0275d8':'#A9A9A9'
         
       }),

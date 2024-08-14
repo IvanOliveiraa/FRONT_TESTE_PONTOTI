@@ -1,5 +1,5 @@
-import React, { Component, useEffect,useMemo,useState} from 'react';
-import {  Link, useNavigate } from 'react-router-dom';
+import React, { Component, useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SidebarTecnico from '../../components/SidebarTecnico';
 import Topbar from '../../components/Topbar';
@@ -77,7 +77,7 @@ color: white;
     background: #f27018; 
 }
 `;
-const ContainerTop= styled.div`{
+const ContainerTop = styled.div`{
   margin: 5px 10px 5px 10px;
   grid-column: 1 / 6;
 display: grid;
@@ -112,74 +112,74 @@ box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px
 
 
 
-export function AtendimentosTecnico () {
-  
-  
+export function AtendimentosTecnico() {
+
+
   let navigate = useNavigate();
 
-  const {iduser}=useAuth();
+  const { iduser } = useAuth();
 
 
-  const{data,mutate}= useAxios(`/tarefas/${iduser}`);
+  const { data, mutate } = useAxios(`/tarefashoje/${iduser}`);
 
-  const datas = useMemo(()=>{
-    return    data || [];
-  },[data])
+  const datas = useMemo(() => {
+    return data || [];
+  }, [data])
 
-  const aguardando = useMemo(()=>{
-    return   datas.filter((tarefas)=>tarefas.status_tarefa=="aguardando"||tarefas.status_tarefa=="revisado");
-  },[data])
-  
-  const naoconcluido = useMemo(()=>{
-    return datas.filter((tarefas)=>tarefas.status_tarefa!="concluido"|tarefas.status_tarefa!="aguardando"||tarefas.status_tarefa!="revisado");
-  },[data])
+  const aguardando = useMemo(() => {
+    return datas.filter((tarefas) => tarefas.status_tarefa == "aguardando" || tarefas.status_tarefa == "revisado");
+  }, [data])
+
+  const naoconcluido = useMemo(() => {
+    return datas.filter((tarefas) => tarefas.status_tarefa != "concluido" | tarefas.status_tarefa != "aguardando" || tarefas.status_tarefa != "revisado");
+  }, [data])
 
 
 
-        return (
-          <>
-           <SidebarTecnico/>    
-       <div style={{ flexDirection: "column", margin:'0px',padding:'0px', width :'100%'}}>
-         
-                <Topbar title="Minhas Tarefas"/>
-                <ContainerTop>
-              {/*  <BotaoNovo onClick={()=>navigate("/novoatendimento")}> Novo Atendimento</BotaoNovo>*/} 
-                <BotaoAdd/>
-                <Input1 placeholder='pesquisar'/>
-                </ContainerTop>
-                <ContainerGeral>
-                
-                
-                <h6 style={{margin:"10px 0px 0px 10px"}}>Aguardando confirmação</h6>
-                
-                <ContainerConfirmacao>
-                
+  return (
+    <>
+      <SidebarTecnico />
+      <div style={{ flexDirection: "column", margin: '0px', padding: '0px', width: '100%' }}>
 
-                {aguardando?.map((tarefas)=>{
-                                return(
-                                  
-                                  <CardAtendimento  key={tarefas.id_tarefa} id_tarefa={tarefas.id_tarefa} id={tarefas.id_atendimento} servico={tarefas.nome_atendimento} status_tarefa={tarefas.status_tarefa} nome_cliente={tarefas.nome_cliente} nome_usuario={tarefas.nome} data={tarefas.data} hora={tarefas.hora} prioridade={tarefas.prioridade} />
-                                );
-                            })}
+        <Topbar title="Minhas Tarefas" />
+        <ContainerTop>
+          {/*  <BotaoNovo onClick={()=>navigate("/novoatendimento")}> Novo Atendimento</BotaoNovo>*/}
+          <BotaoAdd />
+          <Input1 placeholder='pesquisar' />
+        </ContainerTop>
+        <ContainerGeral>
 
-                  </ContainerConfirmacao>
-                  <h6 style={{margin:"10px 0px 0px 10px"}}>Marcados</h6>
-                  <ContainerAtendimentos>
-                  {naoconcluido?.map((atendimentos)=>{
-                                return(
-                                  <CardTarefaTecnico key={atendimentos.id_tarefa} id_tarefa={atendimentos.id_tarefa} id_atendimento={atendimentos.id_atendimento} servico={atendimentos.nome_atendimento} status_tarefa={atendimentos.status_tarefa} nome_cliente={atendimentos.nome_cliente} nome_usuario={atendimentos.nome} hora={atendimentos.hora} data={atendimentos.data}prioridade={atendimentos.prioridade}  revisada={atendimentos.revisada} horario_conclusao1={atendimentos.horario_conclusao}conclusao1={atendimentos.conclusao} />
-                                );
-                            })}
-                  </ContainerAtendimentos>
-                  
-                  
 
-                </ContainerGeral>
-                
-                </div>
-               
-            
-            </>
-        );
-    }
+          <h6 style={{ margin: "10px 0px 0px 10px" }}>Aguardando confirmação</h6>
+
+          <ContainerConfirmacao>
+
+
+            {aguardando?.map((tarefas) => {
+              return (
+
+                <CardAtendimento key={tarefas.id_tarefa} id_tarefa={tarefas.id_tarefa} id={tarefas.id_atendimento} servico={tarefas.nome_atendimento} status_tarefa={tarefas.status_tarefa} nome_cliente={tarefas.nome_cliente} nome_usuario={tarefas.nome} data={tarefas.data} hora={tarefas.hora} prioridade={tarefas.prioridade} />
+              );
+            })}
+
+          </ContainerConfirmacao>
+          <h6 style={{ margin: "10px 0px 0px 10px" }}>Marcados</h6>
+          <ContainerAtendimentos>
+            {naoconcluido?.map((atendimentos) => {
+              return (
+                <CardTarefaTecnico key={atendimentos.id_tarefa} id_tarefa={atendimentos.id_tarefa} id_atendimento={atendimentos.id_atendimento} servico={atendimentos.nome_atendimento} status_tarefa={atendimentos.status_tarefa} nome_cliente={atendimentos.nome_cliente} nome_usuario={atendimentos.nome} hora={atendimentos.hora} data={atendimentos.data} prioridade={atendimentos.prioridade} revisada={atendimentos.revisada} horario_conclusao1={atendimentos.horario_conclusao} conclusao1={atendimentos.conclusao} />
+              );
+            })}
+          </ContainerAtendimentos>
+
+
+
+        </ContainerGeral>
+
+      </div>
+
+
+    </>
+  );
+}
 export default AtendimentosTecnico

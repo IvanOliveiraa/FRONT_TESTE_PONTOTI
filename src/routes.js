@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 
 
@@ -16,34 +16,41 @@ import Tipos from './pages/Tipos';
 import ProtectedRoute from './auth';
 import AtendimentosTecnico from './pages/AtendimentosTecnico';
 import Voltar from './pages/naoautorizada';
+import Orcamentos from './pages/orcamentos';
+import AddOrcamento from './pages/orcamentos/Addorcamento';
+import EditOrcamentos from './pages/orcamentos/Editarorcamento';
 
 export default function Rotas() {
     return (
-    
-    <Routes>
-            <Route exact path="/funcionarios" element={<Funcionarios/>} />
-            <Route exact path="/novofuncionario" element={<AddFuncionario/>} />
-            <Route exact path="/editarfuncionario/:id" element={<EditFuncionario/>} />
 
-            <Route exact path="/clientes" element={<Clientes/>} />
-            <Route exact path="/novocliente" element={<AddCliente/>} />
+        <Routes>
+            <Route exact path="/funcionarios" element={<Funcionarios />} />
+            <Route exact path="/novofuncionario" element={<AddFuncionario />} />
+            <Route exact path="/editarfuncionario/:id" element={<EditFuncionario />} />
 
-            <Route element={<ProtectedRoute/>}>
+            <Route exact path="/orcamentos" element={<Orcamentos />} />
+            <Route exact path="/novoorcamento" element={<AddOrcamento />} />
+            <Route exact path="/editarorcamento/:id" element={<EditOrcamentos />} />
 
-                <Route exact path="/atendimentos" element={<Atendimentos/>} />
-                <Route exact path="/atendimentostecnico" element={<AtendimentosTecnico/>} />
-                <Route exact path="/atendimento/:id" element={<Tarefas/>} />
+            <Route exact path="/clientes" element={<Clientes />} />
+            <Route exact path="/novocliente" element={<AddCliente />} />
+
+            <Route element={<ProtectedRoute />}>
+
+                <Route exact path="/atendimentos" element={<Atendimentos />} />
+                <Route exact path="/atendimentostecnico" element={<AtendimentosTecnico />} />
+                <Route exact path="/atendimento/:id" element={<Tarefas />} />
             </Route>
 
-            <Route exact  path="/dashboard" element={<Dashboard/>} />
-            <Route exact path="/" element={<Login/>} />
+            <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route exact path="/" element={<Login />} />
 
-            <Route  exact path="/voltar" element={<Voltar/>} />
+            <Route exact path="/voltar" element={<Voltar />} />
 
-            <Route exact path="/tipos" element={<Tipos/>} />
-            
-            <Route path="*" element={<Login/>} />
-    </Routes>
+            <Route exact path="/tipos" element={<Tipos />} />
 
-);
-    }
+            <Route path="*" element={<Login />} />
+        </Routes>
+
+    );
+}

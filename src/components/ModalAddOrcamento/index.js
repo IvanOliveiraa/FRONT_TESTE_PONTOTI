@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +6,6 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import AsyncSelect from 'react-select/async';
 import Config from '../../config';
-
 
 const BotaoNovo = styled.button`
 background: #F38439;
@@ -25,7 +23,7 @@ color: white;
 const Label1 = styled.label`
 color: #303030;
 font-size: 16px;
-    `;
+`;
 
 const Input1 = styled.input`
     font-size: 1rem;
@@ -43,43 +41,23 @@ const Input1 = styled.input`
     ::placeholder {
       color: #A9A9A9;
     }
-      }
-    `;
-
+`;
 
 const customStyles = {
-
   option: (provided, state) => ({
     ...provided,
     border: '0.5px solid #A9A9A9',
     color: state.isFocused ? 'white' : 'black',
     backgroundColor: state.isSelected ? '#0275d8' : '#white',
     borderColor: state.isFocused ? '#0275d8' : '#A9A9A9'
-
   }),
   control: (provided) => ({
     ...provided,
     backgroundColor: '#F5F5F5',
   })
 };
-const Select1 = styled(AsyncSelect)`
-    
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    
-    &:focus {
-      outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-      
 
-  option {
+const Select1 = styled(AsyncSelect)`
     font-size: 1rem;
     width: 100%;
     padding: 5px 0px 5px 10px;
@@ -87,13 +65,14 @@ const Select1 = styled(AsyncSelect)`
     background: #F5F5F5;
     border-radius: 3px;
     border: 0.5px solid #A9A9A9;
+    
     &:focus {
       outline: none;
     border-color: #0275d8;
     box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
     }
-  }
 `;
+
 const Text1 = styled.textarea`
     font-size: 1rem;
     width: 100%;
@@ -108,26 +87,17 @@ const Text1 = styled.textarea`
     box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
     }`;
 
-
-
 const BotaoAdd = () => {
   let navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const { register, handleSubmit, formState: { erros } } = useForm()
-
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
   const [selectCliente, setSelectCliente] = useState('');
-  const [selectTecnico, setselectTecnico] = useState('');
   const [selectTipo, setselectTipo] = useState('');
-
-  const [data, setData] = useState('');
-  const [hora, setHora] = useState('');
-  const [prioridade, setPrioridade] = useState('');
-  const [abertura, setAbertura] = useState('');
-
-
+  const [descricao, setDescricao] = useState('');
+  const [valor, setValor] = useState('');
 
   const mapTipos = (tipos) => ({
     value: tipos.id,
@@ -158,161 +128,77 @@ const BotaoAdd = () => {
       );
     return clientes;
   }
-  const mapTecnicos = (usuarios) => ({
-    value: usuarios.id,
-    label: usuarios.nome,
-  });
-
-  async function callTecnicos(value) {
-    const usuarios = await fetch(`${Config.backend}/selectusuarios`)
-      .then((response) => response.json())
-      .then((response) => response.map(mapTecnicos))
-      .then((final) =>
-        final.filter((i) => i.label.toLowerCase().includes(value.toLowerCase()))
-      );
-    return usuarios;
-  }
 
   function Submit(event) {
     var cliente = selectCliente.value;
-    var usuario = selectTecnico.value;
     var servico = selectTipo.value;
 
-    const datafunc = {
+    const dataOrcamento = {
       cliente,
       servico,
-      usuario,
-      data,
-      hora,
-      prioridade,
-      abertura
-
-    }
-
-    console.log(datafunc);
-
-
-    const Info = {
-      method: 'POST',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
+      descricao,
+      valor
     };
-    axios.post('/atendimento/insert', datafunc);
-    window.location.reload(1)
 
-
+    axios.post('/orcamento/insert', dataOrcamento)
+      .then(() => window.location.reload(1))
+      .catch((error) => console.log(error));
   }
-
 
   return (
     <div style={{ textAlign: "center" }}>
-
-      <BotaoNovo onClick={toggle}>Novo Atendimento</BotaoNovo>
+      <BotaoNovo onClick={toggle}> Orçamento</BotaoNovo>
       <form onSubmit={Submit}>
         <Modal centered
           size="lg"
           scrollable isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Novo Atendimento</ModalHeader>
+          <ModalHeader toggle={toggle}>Novo Orçamento</ModalHeader>
 
           <ModalBody style={{ height: "75vh" }}>
-
-
-
             <FormGroup >
-              <Label1 for="endereco">Cliente:</Label1>
+              <Label1 for="cliente">Cliente:</Label1>
               <AsyncSelect
                 id='cliente'
                 placeholder={"Selecione o cliente"}
                 loadOptions={callClientes}
                 styles={customStyles}
-                onChange={(clientes) => {
-                  setSelectCliente(clientes);
-                  console.log(selectCliente);
-                }}
+                onChange={(clientes) => setSelectCliente(clientes)}
                 defaultOptions
               />
-
             </FormGroup>
 
             <FormGroup >
-              <Label1 for="endereco">Tipo Atendimento:</Label1>
+              <Label1 for="tipo_atendimento">Tipo de Serviço:</Label1>
               <AsyncSelect
                 styles={customStyles}
-                placeholder={"Selecione o tipo de atendimento"}
+                placeholder={"Selecione o tipo de serviço"}
                 id='tipo_atendimento'
                 cacheOptions
                 loadOptions={callTipos}
-                onChange={(tipos) => {
-                  setselectTipo(tipos);
-                }}
+                onChange={(tipos) => setselectTipo(tipos)}
                 defaultOptions
               />
             </FormGroup>
 
-
+            <FormGroup >
+              <Label1 for="descricao">Descrição:</Label1>
+              <Text1 type="textarea" id="descricao" onChange={e => setDescricao(e.target.value)} value={descricao} placeholder="Descreva o serviço" required />
+            </FormGroup>
 
             <FormGroup >
-              <Label1 for="endereco">Técnico:</Label1>
-              <AsyncSelect
-                styles={customStyles}
-                placeholder={"Selecione o tipo de atendimento"}
-                id='tecnico'
-                cacheOptions
-                loadOptions={callTecnicos}
-                onChange={(usuarios) => {
-                  setselectTecnico(usuarios);
-                }}
-                defaultOptions
-              />
-
+              <Label1 for="valor">Valor:</Label1>
+              <Input1 type="number" id="valor" onChange={e => setValor(e.target.value)} value={valor} placeholder="Informe o valor" required />
             </FormGroup>
-            <div class="row">
-              <FormGroup className="col-md-6" >
-                <Label1 for="endereco">Data:</Label1>
-                <Input1 type={"date"}
-                  onChange={e => setData(e.target.value)} value={data}
-                />
-
-              </FormGroup>
-              <FormGroup className="col-md-6" >
-                <Label1 for="endereco">Hora:</Label1>
-                <Input1 type={"time"}
-                  onChange={e => setHora(e.target.value)} value={hora}
-
-                />
-
-              </FormGroup>
-
-            </div>
-            <FormGroup>
-              <Label1>
-                <input type="checkbox" onChange={e => setPrioridade(e.target.checked)} checked={prioridade} /> Prioridade </Label1>
-            </FormGroup>
-            <FormGroup >
-              <Label1 for="endereco">Abertura</Label1>
-              <Text1 type="text-area" id="endereco" onChange={e => setAbertura(e.target.value)} value={abertura} required="required" placeholder="Informe a abertura" />
-            </FormGroup>
-
-
-
-
-
-
           </ModalBody>
+
           <ModalFooter style={{ justifyContent: 'space-evenly' }}>
-
-            <Button style={{ width: '35%' }} color="danger" onClick={toggle}> Cancelar </Button>
-            <Button style={{ width: '35%' }} color="success" onClick={Submit} type=''> Adicionar Atendimento </Button>
-
+            <Button style={{ width: '35%' }} color="danger" onClick={toggle}>Cancelar</Button>
+            <Button style={{ width: '35%' }} color="success" onClick={Submit} type='submit'>Adicionar Orçamento</Button>
           </ModalFooter>
-
         </Modal>
       </form>
     </div>
   );
-
 };
 
 export default BotaoAdd;
