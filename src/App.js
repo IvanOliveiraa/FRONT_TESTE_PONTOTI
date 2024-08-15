@@ -10,16 +10,16 @@ class App extends Component {
   render() {
     return (
       <>
-      <title>Ponto TI</title>
-      <AuthProvider>
-        
-      <div className="App" style={{backgroundColor:'#232729',height:'100vh'}}>
-      
-        <Router>
-          <Rotas/>
-        </Router>
-      </div>
-      </AuthProvider>
+        <title>Ponto TI</title>
+        <AuthProvider>
+
+          <div className="App" style={{ backgroundColor: '#232729', height: '100%', margin: "0px", minHeight: '100vh' }}>
+
+            <Router>
+              <Rotas />
+            </Router>
+          </div>
+        </AuthProvider>
       </>);
   }
 }
