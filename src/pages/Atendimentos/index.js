@@ -10,15 +10,15 @@ import BotaoAdd from '../../components/ModalAddAtendimento';
 import useAuth from '../../hooks/useAuth';
 
 const ContainerGeral = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
   border-radius: 10px;
   background: #1a1a1a;
   margin: 20px auto;
   padding: 10px;
   width: 96%;
   color: #d9d4cc;
+  justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px, rgba(0, 0, 0, 0.2) 0px 3px 10px;
 `;
 
@@ -31,7 +31,8 @@ const BotaoAtendimento = styled.button`
 
 const ContainerAtendimentos = styled.div`
   margin: 10px;
-  width: 90%; /* Cobrir 90% da largura do elemento pai */
+  width:96%;
+  grid-column: 1 / 6;
   display: grid;
   background: #292c2e;
   border-radius: 10px;
@@ -42,7 +43,8 @@ const ContainerAtendimentos = styled.div`
 
 const ContainerConfirmacao = styled.div`
   margin: 10px;
-  width: 90%; /* Cobrir 90% da largura do elemento pai */
+  width:96%;
+  grid-column: 1 / 6;
   display: flex;
   overflow-x: auto;
   background: #292c2e;
@@ -68,13 +70,14 @@ const ContainerConfirmacao = styled.div`
 
 const ContainerTop = styled.div`
   margin: 5px 10px 5px 10px;
-  width: 90%; /* Cobrir 90% da largura do elemento pai */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  grid-column: 1 / 6;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  padding: 1px 10px;
 `;
 
 const Input1 = styled.input`
+  float: right;
   color: #d9d4cc;
   font-size: 1rem;
   width: 100%;
