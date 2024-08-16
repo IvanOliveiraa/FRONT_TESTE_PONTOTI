@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 
-import { Button,Modal,ModalBody,ModalFooter,ModalHeader,FormGroup} from 'reactstrap'; 
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap';
 import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AsyncSelect from 'react-select/async';
 
-import {IoAddCircle } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
 
 const Label1 = styled.label`
 color: #303030;
 font-size: 16px;
     `;
 
-    const Input1 = styled.input`
+const Input1 = styled.input`
     font-size: 1rem;
     width: 100%;
     padding: 5px 0px 5px 10px;
@@ -31,55 +30,24 @@ font-size: 16px;
     }
       }
     `;
-    
 
-    const customStyles = {
-    
-      option: (provided, state) => ({
-        ...provided,
-        border:'0.5px solid #A9A9A9',
-        color :state.isFocused? 'white':'black',
-        backgroundColor :state.isSelected?'#0275d8' :'#white',
-        borderColor: state.isFocused?'#0275d8':'#A9A9A9'
-        
-      }),
-      control: (provided) => ({
-        ...provided,
-        backgroundColor : '#F5F5F5',
-      })
-    };
-    const Select1 = styled(AsyncSelect)`
-    
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    
-    &:focus {
-      outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-      
 
-  option {
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    &:focus {
-      outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-  }
-`;
+const customStyles = {
+
+  option: (provided, state) => ({
+    ...provided,
+    border: '0.5px solid #A9A9A9',
+    color: state.isSelected ? 'white' : state.isFocused ? '#0275d8' : 'black',
+    backgroundColor: state.isSelected ? '#0275d8' : '#white',
+    borderColor: state.isFocused ? '#0275d8' : '#A9A9A9'
+
+  }),
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: '#F5F5F5',
+  })
+};
+
 const Text1 = styled.textarea`
     font-size: 1rem;
     width: 100%;
@@ -124,14 +92,14 @@ const ContainerAdd = styled.button`{
         color:#4f5659;
       }
     }`;
-    
 
 
-const BotaoAddTarefa = ({atendimento}) => {
+
+const BotaoAddTarefa = ({ atendimento }) => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  
+
   const [selectTecnico, setselectTecnico] = useState('');
   const [selectTipo, setselectTipo] = useState('');
 
@@ -139,8 +107,8 @@ const BotaoAddTarefa = ({atendimento}) => {
   const [hora, setHora] = useState('');
   const [prioridade, setPrioridade] = useState('');
   const [abertura, setAbertura] = useState('');
-  
-  
+
+
   const mapTipos = (tipos) => ({
     value: tipos.id,
     label: tipos.nome_atendimento,
@@ -171,136 +139,138 @@ const BotaoAddTarefa = ({atendimento}) => {
     return usuarios;
   }
 
-  function Submit(event){
-    var usuario= selectTecnico.value;
-    var servico=selectTipo.value;
-                
+  function Submit(event) {
+    var usuario = selectTecnico.value;
+    var servico = selectTipo.value;
+
     const datafunc = {
-    atendimento,
-    servico,
-    usuario,
-    data,
-    hora,
-    prioridade,
-    abertura
-      
+      atendimento,
+      servico,
+      usuario,
+      data,
+      hora,
+      prioridade,
+      abertura
+
     }
-    
+
     console.log(datafunc);
-    
-    const Info = {
+
+    /*const Info = {
       method: 'POST',
       body: JSON.stringify(datafunc),
       headers: new Headers({
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }),
-  };
-   axios.post('/tarefa/insert',datafunc);
+    };
+    */
+
+    axios.post('/tarefa/insert', datafunc);
     window.location.reload(1);
 
-  
+
   }
 
- 
+
   return (
     <>
-     
+
       <ContainerAdd onClick={toggle}>
-      
-       <IoAddCircle  />
-        </ContainerAdd>
+
+        <IoAddCircle />
+      </ContainerAdd>
       <form onSubmit={Submit}>
-      <Modal  centered
-    size="lg"
-    
-    scrollable isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>
-        
-          Nova Tarefa</ModalHeader>
-        
-        <ModalBody style={{ height: "50vh" }}>
-          
-                   
-                    
+        <Modal centered
+          size="lg"
 
-                    <FormGroup >
-                     <Label1 for="endereco">Tipo Atendimento:</Label1>
-                        <AsyncSelect
-                            styles = { customStyles }
-                            placeholder={"Selecione o tipo de atendimento"}
-                            id='tipo_atendimento'
-                            cacheOptions
-                            loadOptions={callTipos}
-                            onChange={(tipos) => {
-                              setselectTipo(tipos);
-                            }}
-                            defaultOptions
-                        />
-                    </FormGroup>
-                    
-                    
-                    
-                    <FormGroup >
-                    <Label1 for="endereco">Técnico:</Label1>
-                    <AsyncSelect
-                            styles = { customStyles }
-                            placeholder={"Selecione o tipo de atendimento"}
-                            id='tecnico'
-                            cacheOptions
-                            loadOptions={callTecnicos}
-                            onChange={(usuarios) => {
-                              setselectTecnico(usuarios);
-                            }}
-                            defaultOptions
-                        />
-                    
-                    </FormGroup>
-                    <div class="row">
-                    <FormGroup className="col-md-6" >
-                    <Label1 for="endereco">Data:</Label1>
-                        <Input1 type={"date"}
-                            onChange={e => setData(e.target.value)} value={data}
-                        />
+          scrollable isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>
 
-                    </FormGroup>
-                    <FormGroup className="col-md-6" >
-                    <Label1 for="endereco">Hora:</Label1>
-                        <Input1 type={"time"}
-                        onChange={e => setHora(e.target.value)} value={hora}
-                            
-                        />
+            Nova Tarefa</ModalHeader>
 
-                    </FormGroup>
-                    
-                    </div>
-                    <FormGroup>
-                    <Label1>
-                      <input type="checkbox" onChange={e => setPrioridade (e.target.checked)} checked={prioridade}/> Prioridade </Label1>
-                    </FormGroup>
-                    <FormGroup >
-                        <Label1 for="endereco">Abertura</Label1>
-                        <Text1 type="text-area" id="endereco"  onChange={e => setAbertura (e.target.value)} value={abertura} required="required" placeholder="Informe a abertura" />
-                    </FormGroup>
-                    
+          <ModalBody style={{ height: "50vh" }}>
 
-                  
-             
-                   
-                    
-        </ModalBody>
-        <ModalFooter style={{justifyContent:'space-evenly' }}>
-          
-          <Button style={{width:'35%' }} color="danger" onClick={toggle}> Cancelar </Button>
-          <Button style={{width:'35%' }} color="success"onClick={Submit} type=''> Adicionar usuario </Button>
-          
 
-        </ModalFooter>
-        
-      </Modal>
+
+
+            <FormGroup >
+              <Label1 for="endereco">Tipo Atendimento:</Label1>
+              <AsyncSelect
+                styles={customStyles}
+                placeholder={"Selecione o tipo de atendimento"}
+                id='tipo_atendimento'
+                cacheOptions
+                loadOptions={callTipos}
+                onChange={(tipos) => {
+                  setselectTipo(tipos);
+                }}
+                defaultOptions
+              />
+            </FormGroup>
+
+
+
+            <FormGroup >
+              <Label1 for="endereco">Técnico:</Label1>
+              <AsyncSelect
+                styles={customStyles}
+                placeholder={"Selecione o tipo de atendimento"}
+                id='tecnico'
+                cacheOptions
+                loadOptions={callTecnicos}
+                onChange={(usuarios) => {
+                  setselectTecnico(usuarios);
+                }}
+                defaultOptions
+              />
+
+            </FormGroup>
+            <div class="row">
+              <FormGroup className="col-md-6" >
+                <Label1 for="endereco">Data:</Label1>
+                <Input1 type={"date"}
+                  onChange={e => setData(e.target.value)} value={data}
+                />
+
+              </FormGroup>
+              <FormGroup className="col-md-6" >
+                <Label1 for="endereco">Hora:</Label1>
+                <Input1 type={"time"}
+                  onChange={e => setHora(e.target.value)} value={hora}
+
+                />
+
+              </FormGroup>
+
+            </div>
+            <FormGroup>
+              <Label1>
+                <input type="checkbox" onChange={e => setPrioridade(e.target.checked)} checked={prioridade} /> Prioridade </Label1>
+            </FormGroup>
+            <FormGroup >
+              <Label1 for="endereco">Abertura</Label1>
+              <Text1 type="text-area" id="endereco" onChange={e => setAbertura(e.target.value)} value={abertura} required="required" placeholder="Informe a abertura" />
+            </FormGroup>
+
+
+
+
+
+
+          </ModalBody>
+          <ModalFooter style={{ justifyContent: 'space-evenly' }}>
+
+            <Button style={{ width: '35%' }} color="danger" onClick={toggle}> Cancelar </Button>
+            <Button style={{ width: '35%' }} color="success" onClick={Submit} type=''> Adicionar Tarefa </Button>
+
+
+          </ModalFooter>
+
+        </Modal>
       </form>
     </>
   );
 
-  };
+};
 
-export default BotaoAddTarefa ;
+export default BotaoAddTarefa;

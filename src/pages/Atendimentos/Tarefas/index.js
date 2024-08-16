@@ -131,7 +131,7 @@ const Tarefas = () => {
             {data?.map((tarefas) => {
               return (
 
-                <CardTarefa key={tarefas.id_tarefa} id_tarefa={tarefas.id_tarefa} id_atendimento={tarefas.id_atendimento} servico={tarefas.nome_atendimento} status_tarefa={tarefas.status_tarefa} nome_cliente={tarefas.nome_cliente} nome_usuario={tarefas.nome} hora={tarefas.hora} prioridade={tarefas.prioridade} revisada={tarefas.revisada} horario_conclusao1={tarefas.horario_conclusao} conclusao1={tarefas.conclusao} />
+                <CardTarefa key={tarefas.id_tarefa} id_tarefa={tarefas.id_tarefa} id_atendimento={tarefas.id_atendimento} servico={tarefas.nome_atendimento} data={tarefas.data} status_tarefa={tarefas.status_tarefa} nome_cliente={tarefas.nome_cliente} nome_usuario={tarefas.nome} hora={tarefas.hora} prioridade={tarefas.prioridade} revisada={tarefas.revisada} horario_conclusao1={tarefas.horario_conclusao} conclusao1={tarefas.conclusao} conclusao2={tarefas.pendenciaDescricao} />
               );
             })}
             <BotaoAddTarefa atendimento={id} />

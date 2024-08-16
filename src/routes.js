@@ -18,7 +18,6 @@ import AtendimentosTecnico from './pages/AtendimentosTecnico';
 import Voltar from './pages/naoautorizada';
 import Orcamentos from './pages/orcamentos';
 import AddOrcamento from './pages/orcamentos/Addorcamento';
-import EditOrcamentos from './pages/orcamentos/Editarorcamento';
 
 export default function Rotas() {
     return (
@@ -30,7 +29,6 @@ export default function Rotas() {
 
             <Route exact path="/orcamentos" element={<Orcamentos />} />
             <Route exact path="/novoorcamento" element={<AddOrcamento />} />
-            <Route exact path="/editarorcamento/:id" element={<EditOrcamentos />} />
 
             <Route exact path="/clientes" element={<Clientes />} />
             <Route exact path="/novocliente" element={<AddCliente />} />
