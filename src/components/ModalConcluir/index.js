@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import InputMask from "react-input-mask";
-
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label } from 'reactstrap';
 import styled from 'styled-components';
 import axios from '../../api/axios';
 import moment from 'moment';
-
 import { IoCheckmarkCircle } from "react-icons/io5";
 
 const BotaoConfirma = styled.button`
@@ -23,6 +20,23 @@ const BotaoConfirma = styled.button`
   
   :hover {
     background: #4CAF50;
+  }
+`;
+
+const BotaoRevisar = styled.button`
+  border: none;
+  background: #f0ad4e;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: opacity 0.2s ease-out;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+
+  :hover {
+    background: #ec971f;
   }
 `;
 
@@ -69,39 +83,40 @@ const CheckboxContainer = styled.div`
   align-items: center;
 `;
 
-const BotaoConcluir = ({ id1, nivel, horario_conclusao2, conclusao2 }) => {
+const BotaoConcluir = ({ id1, nivel, horario_conclusao2, conclusao2, pendeciaDesc }) => {
   const [modal, setModal] = useState(false);
-  const [pendente, setPendente] = useState(false);
-  const [pendenciaDescricao, setPendenciaDescricao] = useState('');
-
-  useEffect(() => {
-    // Simulação de recuperação de pendência existente
-    if (conclusao2) {
-      setPendente(true);
-      setPendenciaDescricao(conclusao2.pendenciaDescricao || '');
-    }
-  }, [conclusao2]);
-
-  let datacerto = moment(horario_conclusao2).format('YYYY-MM-DD');
-  let timecerto = moment(horario_conclusao2).format('HH:mm');
-  let datatimecerto = `${datacerto}T${timecerto}`;
-
-  const [conclusao, setConclusao] = useState('');
+  const [pendente, setPendente] = useState(!!pendeciaDesc);
+  const [pendenciaDescricao, setPendenciaDescricao] = useState(pendeciaDesc || '');
+  const [conclusao, setConclusao] = useState(conclusao2 || '');
   const [hora, setHora] = useState('');
 
-  const toggle = () => {
-    setModal(!modal);
-    setConclusao(conclusao2);
-    setHora(datatimecerto);
-  };
+  useEffect(() => {
+    if (horario_conclusao2) {
+      const datacerto = moment(horario_conclusao2).format('YYYY-MM-DD');
+      const timecerto = moment(horario_conclusao2).format('HH:mm');
+      setHora(`${datacerto}T${timecerto}`);
+    }
+
+    setPendente(!!pendeciaDesc);
+    setPendenciaDescricao(pendeciaDesc || '');
+  }, [horario_conclusao2, pendeciaDesc]);
+
+  const toggle = () => setModal(!modal);
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     if (!conclusao) {
       alert("A conclusão não pode estar vazia.");
       return;
     }
 
-    const datafunc = { conclusao, hora, nivel, pendente, pendenciaDescricao };
+    const datafunc = {
+      conclusao,
+      hora,
+      nivel,
+      pendente,
+      pendenciaDescricao: pendente ? pendenciaDescricao : null
+    };
 
     axios.put(`/tarefa/confirmar/${id1}`, datafunc)
       .then(() => {
@@ -123,7 +138,7 @@ const BotaoConcluir = ({ id1, nivel, horario_conclusao2, conclusao2 }) => {
           </ModalHeader>
           <ModalBody>
             <FormGroup className="col">
-              <Label1 for="endereco">Hora:</Label1>
+              <Label1 for="hora">Hora:</Label1>
               <Input1
                 type="datetime-local"
                 value={hora}
@@ -137,44 +152,32 @@ const BotaoConcluir = ({ id1, nivel, horario_conclusao2, conclusao2 }) => {
                 id="conclusao"
                 value={conclusao}
                 onChange={e => setConclusao(e.target.value)}
-                required={!nivel === "administrativo"}
                 placeholder="Digite a conclusão do serviço"
                 readOnly={nivel === "administrativo"}
               />
             </FormGroup>
-            {nivel === "tecnico" && (
-              <>
-                <FormGroup>
-                  <CheckboxContainer>
-                    <input
-                      type="checkbox"
-                      onChange={e => setPendente(e.target.checked)}
-                      checked={pendente}
-                    />
-                    <Label1 style={{ marginLeft: '8px' }}>Marcar como pendente</Label1>
-                  </CheckboxContainer>
-                </FormGroup>
-                {pendente && (
-                  <FormGroup>
-                    <Label1 for="pendenciaDescricao">Descrição da Pendência:</Label1>
-                    <Text1
-                      id="pendenciaDescricao"
-                      value={pendenciaDescricao}
-                      onChange={e => setPendenciaDescricao(e.target.value)}
-                      placeholder="Descreva as pendências"
-                      required={pendente}
-                    />
-                  </FormGroup>
-                )}
-              </>
-            )}
-            {nivel === "administrativo" && pendente && (
+
+            <FormGroup>
+              <CheckboxContainer>
+                <input
+                  type="checkbox"
+                  onChange={e => setPendente(e.target.checked)}
+                  checked={pendente}
+                  disabled={nivel === "administrativo"}
+                />
+                <Label1 style={{ marginLeft: '8px' }}>Marcar como pendente</Label1>
+              </CheckboxContainer>
+            </FormGroup>
+            {(pendente || (nivel === "administrativo" && pendeciaDesc)) && (
               <FormGroup>
-                <Label1 for="pendenciaDescricao">Pendência:</Label1>
+                <Label1 for="pendenciaDescricao">Descrição da Pendência:</Label1>
                 <Text1
                   id="pendenciaDescricao"
                   value={pendenciaDescricao}
-                  readOnly
+                  onChange={e => setPendenciaDescricao(e.target.value)}
+                  placeholder="Descreva as pendências"
+                  required={pendente}
+                  readOnly={nivel === "administrativo"}
                 />
               </FormGroup>
             )}
@@ -183,7 +186,11 @@ const BotaoConcluir = ({ id1, nivel, horario_conclusao2, conclusao2 }) => {
             <Button style={{ width: '35%' }} color="danger" onClick={toggle}>
               {nivel === "administrativo" ? "Voltar" : "Cancelar"}
             </Button>
-            {nivel !== "administrativo" && (
+            {nivel === "administrativo" ? (
+              <Button style={{ width: '35%' }} color="info" onClick={handleSubmit}>
+                Revisar
+              </Button>
+            ) : (
               <Button style={{ width: '35%' }} color="success" onClick={handleSubmit}>
                 Concluir
               </Button>

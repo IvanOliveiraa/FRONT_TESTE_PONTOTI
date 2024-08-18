@@ -7,20 +7,6 @@ import Topbar from '../../components/Topbar';
 import CardAtendimento from '../../components/CardAtendimento';
 import useAxios from '../../hooks/useAxios';
 import BotaoAdd from '../../components/ModalAddAtendimento';
-import useAuth from '../../hooks/useAuth';
-
-const ContainerGeral = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 10px;
-  background: #1a1a1a;
-  margin: 20px auto;
-  padding: 10px;
-  width: 96%;
-  color: #d9d4cc;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px, rgba(0, 0, 0, 0.2) 0px 3px 10px;
-`;
 
 const BotaoAtendimento = styled.button`
   margin: 0px;
@@ -29,9 +15,24 @@ const BotaoAtendimento = styled.button`
   border: none;
 `;
 
+const ContainerGeral = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  background: #1a1a1a;
+  margin: 20px auto;
+  padding: 0px;
+  width: 96%;
+  color: #d9d4cc;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px, rgba(0, 0, 0, 0.2) 0px 3px 10px;
+`;
+
+
+
 const ContainerAtendimentos = styled.div`
   margin: 10px;
-  width: 90%; /* Cobrir 90% da largura do elemento pai */
+  width: 90%;
   display: grid;
   background: #292c2e;
   border-radius: 10px;
@@ -42,7 +43,7 @@ const ContainerAtendimentos = styled.div`
 
 const ContainerConfirmacao = styled.div`
   margin: 10px;
-  width: 90%; /* Cobrir 90% da largura do elemento pai */
+  width: 90%;
   display: flex;
   overflow-x: auto;
   background: #292c2e;
@@ -55,7 +56,6 @@ const ContainerConfirmacao = styled.div`
     margin-right: 10px;
   }
 
-  /* Estiliza a barra de rolagem */
   &::-webkit-scrollbar {
     height: 8px;
   }
@@ -67,17 +67,20 @@ const ContainerConfirmacao = styled.div`
 `;
 
 const ContainerTop = styled.div`
-  margin: 5px 10px 5px 10px;
-  width: 90%; /* Cobrir 90% da largura do elemento pai */
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-around ;
+  border-radius: 10px;
+  margin: auto;
+  padding: 10px;
+  width: 96%;
 `;
 
 const Input1 = styled.input`
   color: #d9d4cc;
   font-size: 1rem;
-  width: 100%;
+  width: 70%;
   padding: 5px 0px 5px 10px;
   margin: 0px;
   background: #212324;
@@ -93,31 +96,47 @@ const Input1 = styled.input`
   }
 `;
 
+const PaginationButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+
+  & > button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #292c2e;
+    color: #d9d4cc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  & > span {
+    margin: 0 10px;
+    color: #d9d4cc;
+  }
+`;
+
 export function Atendimentos() {
-  let navigate = useNavigate();
-  const { nivel } = useAuth();
+  const navigate = useNavigate();
 
-  const { data } = useAxios('/atendimentos');
+  // Requisição para os atendimentos aguardando confirmação
+  const { data: aguardandoData } = useAxios('/atendimentos/aguardando');
+  const { data: allAtendimentos } = useAxios('/atendimentos');
 
-  // Acesse o array de atendimentos no JSON retornado
-  const datas = useMemo(() => {
-    return Array.isArray(data?.atendimentos) ? data.atendimentos : [];
-  }, [data]);
-
-  const itensPorPagina = 20;
+  const itensPorPagina = 10;
   const [currentPage, setCurrentPage] = useState(0);
 
-  const pages = Math.ceil(datas.length / itensPorPagina);
-  const StartIndex = currentPage * itensPorPagina;
-  const EndIndex = StartIndex + itensPorPagina;
+  // Dados paginados para atendimentos gerais
+  const paginatedData = useMemo(() => {
+    const datas = Array.isArray(allAtendimentos?.atendimentos) ? allAtendimentos.atendimentos : [];
+    const StartIndex = currentPage * itensPorPagina;
+    const EndIndex = StartIndex + itensPorPagina;
+    return datas.slice(StartIndex, EndIndex);
+  }, [allAtendimentos, currentPage]);
 
-  const aguardando = useMemo(() => {
-    return datas
-      .filter(
-        (tarefas) => tarefas.status_tarefa === 'aguardando' || tarefas.status_tarefa === 'revisado'
-      )
-      .slice(StartIndex, EndIndex);
-  }, [datas, StartIndex, EndIndex]);
+  const totalPages = Math.ceil((allAtendimentos?.atendimentos?.length || 0) / itensPorPagina);
 
   return (
     <>
@@ -131,21 +150,22 @@ export function Atendimentos() {
         <ContainerGeral>
           <h6 style={{ margin: '10px 0px 0px 10px' }}>Aguardando confirmação</h6>
           <ContainerConfirmacao>
-            {aguardando?.map((atendimentos) => (
+            {aguardandoData?.atendimentos?.map((atendimento) => (
               <BotaoAtendimento
-                key={atendimentos.id_tarefa}
-                onClick={() => navigate(`/atendimento/${atendimentos.id}`)}
+                key={atendimento.id_tarefa}
+                onClick={() => navigate(`/atendimento/${atendimento.id}`)}
               >
                 <CardAtendimento
-                  id={atendimentos.id}
-                  servico={atendimentos.nome_atendimento}
-                  status={atendimentos.status}
-                  status_tarefa={atendimentos.status_tarefa}
-                  nome_cliente={atendimentos.nome_cliente}
-                  nome_usuario={atendimentos.nome}
-                  hora={atendimentos.hora}
-                  data={atendimentos.data}
-                  prioridade={atendimentos.prioridade}
+                  id={atendimento.id}
+                  servico={atendimento.nome_atendimento}
+                  status={atendimento.status}
+                  status_tarefa={atendimento.status_tarefa}
+                  nome_cliente={atendimento.nome_cliente}
+                  nome_usuario={atendimento.nome}
+                  hora={atendimento.hora}
+                  data={atendimento.data}
+                  prioridade={atendimento.prioridade}
+                  pendente={atendimento.pendente}
                 />
               </BotaoAtendimento>
             ))}
@@ -153,24 +173,36 @@ export function Atendimentos() {
 
           <h6 style={{ margin: '10px 0px 0px 10px' }}>Atendimentos</h6>
           <ContainerAtendimentos>
-            {datas?.map((atendimentos) => (
+            {paginatedData.map((atendimento) => (
               <BotaoAtendimento
-                key={atendimentos.id_tarefa}
-                onClick={() => navigate(`/atendimento/${atendimentos.id}`)}
+                key={atendimento.id_tarefa}
+                onClick={() => navigate(`/atendimento/${atendimento.id}`)}
               >
                 <CardAtendimento
-                  id={atendimentos.id}
-                  servico={atendimentos.nome_atendimento}
-                  status={atendimentos.status}
-                  status_tarefa={atendimentos.status_tarefa}
-                  nome_cliente={atendimentos.nome_cliente}
-                  nome_usuario={atendimentos.nome}
-                  hora={atendimentos.hora}
-                  prioridade={atendimentos.prioridade}
+                  id={atendimento.id}
+                  servico={atendimento.nome_atendimento}
+                  status={atendimento.status}
+                  status_tarefa={atendimento.status_tarefa}
+                  nome_cliente={atendimento.nome_cliente}
+                  nome_usuario={atendimento.nome}
+                  hora={atendimento.hora}
+                  prioridade={atendimento.prioridade}
                 />
               </BotaoAtendimento>
             ))}
           </ContainerAtendimentos>
+
+          <PaginationButtons>
+            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))} disabled={currentPage === 0}>
+              Anterior
+            </button>
+            <span>
+              Página {currentPage + 1} de {totalPages}
+            </span>
+            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))} disabled={currentPage === totalPages - 1}>
+              Próximo
+            </button>
+          </PaginationButtons>
         </ContainerGeral>
       </div>
     </>

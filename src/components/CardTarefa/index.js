@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useAuth from '../../hooks/useAuth';
-import { IoReceiptSharp } from "react-icons/io5";
+import ModalTarefasDetalhes from '../ModalTarefasDetalhes';
 import BotaoDeleteTarefa from '../ModalDeleteTarefa';
 import BotaoConcluir from '../ModalConcluir';
 import moment from 'moment';
@@ -68,23 +68,8 @@ const Footercard = styled.div`
   }
 `;
 
-const BotaoFooter = styled.button`
-  border: none;
-  background: #292c2e;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: opacity 0.2 ease-out;
-  svg {
-    height: 25px;
-    width: 25px;
-    color: #d9d4cc;
-  }
-  :hover {
-    background: ${(props) => (props.cor === "vermelho" ? "#ff1925" : props.cor === "verde" ? "#4CAF50" : "#292c2a")};
-  }
-`;
+const CardTarefa = ({ id_tarefa, servico, status_tarefa, nome_cliente, nome_usuario, data, hora, prioridade, horario_conclusao1, conclusao1, pendencia, pendeciaDesc }) => {
 
-const CardTarefa = ({ id_tarefa, servico, status_tarefa, nome_usuario, data, hora, prioridade, horario_conclusao1, conclusao1 }) => {
   const { nivel } = useAuth();
 
   // Verifica se a tarefa está atrasada e o status é "aberta" ou "agendada"
@@ -100,17 +85,23 @@ const CardTarefa = ({ id_tarefa, servico, status_tarefa, nome_usuario, data, hor
         <Bodycard>
           <p>
             {servico} <br />
+            {pendeciaDesc} <br />
             {moment(data).format('DD/MM/YYYY')}<br />
             {hora.substr(0, 5)}<br />
             {status_tarefa} <br />
           </p>
         </Bodycard>
         <Footercard>
-          <BotaoFooter>
-            <IoReceiptSharp />
-          </BotaoFooter>
+          <ModalTarefasDetalhes id_tarefa={id_tarefa} />
           <BotaoDeleteTarefa id={id_tarefa} />
-          <BotaoConcluir id1={id_tarefa} horario_conclusao2={horario_conclusao1} conclusao2={conclusao1} nivel={nivel} />
+          <BotaoConcluir
+            id1={id_tarefa}
+            horario_conclusao2={horario_conclusao1}
+            conclusao2={conclusao1}
+            pendencia={pendencia}
+            pendeciaDesc={pendeciaDesc}
+            nivel={nivel}
+          />
         </Footercard>
       </ContainerCard>
     );

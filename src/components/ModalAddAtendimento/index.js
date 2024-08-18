@@ -12,7 +12,6 @@ import Config from '../../config';
 const BotaoNovo = styled.button`
 background: #F38439;
 border: none;
-margin: 1% 2% 1% 2%;
 float: left;
 border-Radius: 3px;
 padding: 7px 15px;

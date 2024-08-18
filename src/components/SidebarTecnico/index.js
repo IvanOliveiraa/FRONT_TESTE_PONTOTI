@@ -1,6 +1,6 @@
 import React from 'react';
-import { Nav,NavItem } from 'reactstrap';
-import {  Link } from 'react-router-dom';
+import { Nav, NavItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 
@@ -33,29 +33,29 @@ const SidebarContainer = styled.div`
 
 
 const SidebarTecnico = () => (
-    
-    <SidebarContainer >
-      
-   <div style={{width:'160px' }} >
-     <div>
-     <img src={require('../../assets/logo.png')}style={{width:'140px', margin:'10px 10px 10px 10px '}}></img>
-     </div>
-  <Nav vertical>
 
-    <Botao>
-  <Link to="/">  
-    <NavItem>     
-        Minhas Tarefas
-    </NavItem>
-  </Link>
-    </Botao>
+  <SidebarContainer >
 
- 
-    
-  </Nav>
-  
-</div>
-    </SidebarContainer>
+    <div style={{ width: '160px' }} >
+      <div>
+        <img src={require('../../assets/logo.png')} style={{ width: '140px', margin: '10px 10px 10px 10px ' }}></img>
+      </div>
+      <Nav vertical>
+
+        <Botao>
+          <Link to="/">
+            <NavItem>
+              Minhas Tarefas
+            </NavItem>
+          </Link>
+        </Botao>
+
+
+
+      </Nav>
+
+    </div>
+  </SidebarContainer>
 );
 
 export default SidebarTecnico;

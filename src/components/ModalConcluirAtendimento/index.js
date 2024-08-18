@@ -120,13 +120,6 @@ const BotaoConcluirAtendimento = ({ id1, nivel, horario_conclusao2, conclusao2 }
       conclusao, hora, nivel
     }
 
-    const Info = {
-      method: 'put',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
     axios.put(`/atendimento/confirmar/${id1}`, datafunc);
     console.log(datafunc);
     console.log(event);
