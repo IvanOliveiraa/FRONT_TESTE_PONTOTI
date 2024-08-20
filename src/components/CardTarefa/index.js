@@ -85,7 +85,6 @@ const CardTarefa = ({ id_tarefa, servico, status_tarefa, nome_cliente, nome_usua
         <Bodycard>
           <p>
             {servico} <br />
-            {pendeciaDesc} <br />
             {moment(data).format('DD/MM/YYYY')}<br />
             {hora.substr(0, 5)}<br />
             {status_tarefa} <br />
@@ -93,7 +92,7 @@ const CardTarefa = ({ id_tarefa, servico, status_tarefa, nome_cliente, nome_usua
         </Bodycard>
         <Footercard>
           <ModalTarefasDetalhes id_tarefa={id_tarefa} />
-          <BotaoDeleteTarefa id={id_tarefa} />
+          {nivel === "administrador" && <BotaoDeleteTarefa id={id_tarefa} />}
           <BotaoConcluir
             id1={id_tarefa}
             horario_conclusao2={horario_conclusao1}

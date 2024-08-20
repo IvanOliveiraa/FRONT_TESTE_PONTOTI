@@ -18,6 +18,7 @@ import AtendimentosTecnico from './pages/AtendimentosTecnico';
 import Voltar from './pages/naoautorizada';
 import Orcamentos from './pages/orcamentos';
 import AddOrcamento from './pages/orcamentos/Addorcamento';
+import TarefasTecnico from './pages/TarefasTecnico';
 
 export default function Rotas() {
     return (
@@ -25,6 +26,7 @@ export default function Rotas() {
         <Routes>
             <Route exact path="/funcionarios" element={<Funcionarios />} />
             <Route exact path="/novofuncionario" element={<AddFuncionario />} />
+            <Route exact path="/tarefasfuncionario/:id" element={<EditFuncionario />} />
             <Route exact path="/editarfuncionario/:id" element={<EditFuncionario />} />
 
             <Route exact path="/orcamentos" element={<Orcamentos />} />
@@ -38,8 +40,9 @@ export default function Rotas() {
                 <Route exact path="/atendimentos" element={<Atendimentos />} />
                 <Route exact path="/atendimentostecnico" element={<AtendimentosTecnico />} />
                 <Route exact path="/atendimento/:id" element={<Tarefas />} />
-            </Route>
 
+            </Route>
+            <Route exact path="/tarefastecnico/:id" element={<TarefasTecnico />} />
             <Route exact path="/dashboard" element={<Dashboard />} />
             <Route exact path="/" element={<Login />} />
 

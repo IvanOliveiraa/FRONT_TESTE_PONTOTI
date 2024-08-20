@@ -32,7 +32,7 @@ const BotaoGerarProposta = ({ id }) => {
 
 
   function geraProposta(id) {
-    axios.delete(`/orcamento/gerarproposta/${id}`)
+    axios.get(`/orcamento/gerarproposta/${id}`)
     setModaldl(false);
     window.location.reload(1)
 

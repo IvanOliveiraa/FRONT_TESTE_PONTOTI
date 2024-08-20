@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Config from '../../config';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap';
 import axios from '../../api/axios';
 import styled from 'styled-components';
@@ -115,7 +115,7 @@ const BotaoAddTarefa = ({ atendimento }) => {
   });
 
   async function callTipos(value) {
-    const tipos = await fetch(`http://localhost:8080/tiposatendimentos`)
+    const tipos = await fetch(`${Config.backend}/tiposatendimentos`)
       .then((response) => response.json())
       .then((response) => response.map(mapTipos))
       .then((final) =>
@@ -130,7 +130,7 @@ const BotaoAddTarefa = ({ atendimento }) => {
   });
 
   async function callTecnicos(value) {
-    const usuarios = await fetch(`http://localhost:8080/selectusuarios`)
+    const usuarios = await fetch(`${Config.backend}/selectusuarios`)
       .then((response) => response.json())
       .then((response) => response.map(mapTecnicos))
       .then((final) =>

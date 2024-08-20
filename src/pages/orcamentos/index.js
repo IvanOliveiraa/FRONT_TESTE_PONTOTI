@@ -141,8 +141,9 @@ const Orcamentos = () => {
                                 <thead>
                                     <tr>
                                         <th>Cliente</th>
+                                        <th>tipo</th>
                                         <th>Valor</th>
-                                        <th>Data</th>
+                                        <th>Validade</th>
                                         <th>Status</th>
                                         <th>Ações</th>
                                     </tr>
@@ -151,17 +152,21 @@ const Orcamentos = () => {
                                     {data?.map((orcamento) => {
                                         return (
                                             <tr key={orcamento.id}>
-                                                <td>{orcamento.cliente}</td>
+                                                <td>{orcamento.nome_cliente}</td>
+                                                <td>{orcamento.nome_atendimento}</td>
                                                 <td>{orcamento.valor}</td>
-                                                <td>{orcamento.data}</td>
+                                                <td>{orcamento.data_validade}</td>
                                                 <td>{orcamento.status}</td>
                                                 <td style={{ alignItems: 'right', justifyContent: 'center' }}>
-                                                    {/*<BotaoEdit
+                                                    {
+                                                        <BotaoGerarProposta id={orcamento.id} />
+                                                    /*<BotaoDelete id={orcamento.id} />
+                                                    <BotaoEdit
                                                         id={orcamento.id}
                                                         cliente={orcamento.cliente}
                                                         valor={orcamento.valor}
                                                         data={orcamento.data}
-                                                        status={orcamento.status}
+                                                        status={orcamento.status} 
                                                     />*/}
                                                 </td>
                                             </tr>

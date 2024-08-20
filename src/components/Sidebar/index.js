@@ -64,7 +64,7 @@ const Sidebar = () => (
         <Botao>
           <Link to="/funcionarios">
             <NavItem>
-              Funcionarios
+              Colaboradores
             </NavItem>
           </Link>
         </Botao>
