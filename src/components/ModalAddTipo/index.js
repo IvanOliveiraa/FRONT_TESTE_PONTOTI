@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from "react-input-mask";
 
-import { Button,Modal,ModalBody,ModalFooter,ModalHeader, Form,FormGroup,Label,Input } from 'reactstrap'; 
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -27,63 +27,70 @@ const BotaoAdd = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const[nome, setNome]= useState('');
+  const [nome, setNome] = useState('');
 
-  function handleSubmit(event){
+  function handleSubmit(event) {
     event.preventDefault();
     const datafunc = {
-      nome  
+      nome
     }
-    
+
     const Info = {
       method: 'POST',
       body: JSON.stringify(datafunc),
       headers: new Headers({
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }),
-  };
-    axios.post('/tiposatendimentos/insert',datafunc);
-    setModal(false);
-    navigate("/tipos");
-    window.location.reload(1);
-  
+    };
+    axios.post('/tiposatendimentos/insert', datafunc)
+      .then((response) => {
+        // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+        setModal(false);
+        window.location.reload();  // Recarrega a página após a conclusão da requisição
+      })
+      .catch((error) => {
+        console.error("Houve um erro ao adicionar o atendimento:", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
+
+
   }
- 
+
   return (
     <div style={{ textAlign: "center" }}>
-     
+
       <BotaoNovo onClick={toggle}>Novo Atendimento</BotaoNovo>
       <Form onSubmit={handleSubmit}>
-      <Modal  centered
-    size="lg"
-    scrollable isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Novo Atendimento</ModalHeader>
-        
-        <ModalBody style={{ height: "20vh" }}>
-          
-                    <FormGroup>
-                        <Label for="Nome">Nome</Label>
-                        <Input type="text" id="nome" onChange={e => setNome (e.target.value)} value={nome} required="required" placeholder="Informe o nome" />
-                    </FormGroup>
-                    
-                   
-                    
-        </ModalBody>
-        <ModalFooter style={{justifyContent:'space-evenly' }}>
-          
-          <Button style={{width:'35%' }} color="danger" onClick={toggle}>
-            Cancelar
-          </Button>
-          <Button style={{width:'35%' }} color="success" onClick={handleSubmit}>
-           Adicionar
-          </Button>
-        </ModalFooter>
-        
-      </Modal>
+        <Modal centered
+          size="lg"
+          scrollable isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Novo Atendimento</ModalHeader>
+
+          <ModalBody style={{ height: "20vh" }}>
+
+            <FormGroup>
+              <Label for="Nome">Nome</Label>
+              <Input type="text" id="nome" onChange={e => setNome(e.target.value)} value={nome} required="required" placeholder="Informe o nome" />
+            </FormGroup>
+
+
+
+          </ModalBody>
+          <ModalFooter style={{ justifyContent: 'space-evenly' }}>
+
+            <Button style={{ width: '35%' }} color="danger" onClick={toggle}>
+              Cancelar
+            </Button>
+            <Button style={{ width: '35%' }} color="success" onClick={handleSubmit}>
+              Adicionar
+            </Button>
+          </ModalFooter>
+
+        </Modal>
       </Form>
     </div>
   );
 
-  };
+};
 
-export default BotaoAdd ;
+export default BotaoAdd;
