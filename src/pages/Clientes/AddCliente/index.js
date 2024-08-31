@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {  Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { Button,Modal,ModalBody,ModalFooter,ModalHeader, Form,FormGroup,Label,Input,Body,Footer } from 'reactstrap'; 
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input, Body, Footer } from 'reactstrap';
 import axios from '../../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/Sidebar';
@@ -25,7 +25,7 @@ color: #d9d4cc;
 font-size: 16px;
     `;
 
-    const Input1 = styled.input`
+const Input1 = styled.input`
     color:#d9d4cc;
     font-size: 1rem;
     width: 100%;
@@ -44,7 +44,7 @@ font-size: 16px;
     }
       }
     `;
-    const Select1 = styled.select`
+const Select1 = styled.select`
     color:#d9d4cc;
     font-size: 1rem;
     width: 100%;
@@ -90,94 +90,100 @@ background: #212324;
     }`;
 
 
-export function AddCliente () {
+export function AddCliente() {
 
 
-  const[nome, setNome]= useState('');
-  const[email, setEmail]= useState('');
-  const[telefone, setTelefone]= useState('');
-  const[responsavel, setResponsavel]= useState('');
-  const[endereco, setEndereco]= useState('');
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [responsavel, setResponsavel] = useState('');
+  const [endereco, setEndereco] = useState('');
 
-  function handleSubmit(){
+  function handleSubmit() {
     const datafunc = {
-      nome, email, responsavel, telefone, endereco  
+      nome, email, responsavel, telefone, endereco
     }
-    
+
     const Info = {
       method: 'POST',
       body: JSON.stringify(datafunc),
       headers: new Headers({
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }),
-  };
-    axios.post('/cliente/insert',datafunc);
-    navigate("/clientes")
-    window.location.reload(1)
-  
+    };
+    axios.post('/cliente/insert', datafunc).then((response) => {
+      // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+      navigate("/clientes")
+    })
+      .catch((error) => {
+        console.error("Houve um erro ao criar o cliente:", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
+
+
   }
 
   let navigate = useNavigate();
 
-        return (<>
-           <Sidebar/>      
-            
-       <div style={{ flexDirection: "column", margin:'0px',padding:'0px', width :'100%'}}>
-                <Topbar title="Novo Cliente"/>
-               
-                <ContainerGeral >
-                <form onSubmit={handleSubmit}>
-     
-        
-                <FormGroup>
-                        <Label1 for="nome">Nome</Label1>
-                        <Input1 type="text" id="nome" onChange={e => setNome (e.target.value)} value={nome} required="required" placeholder="Informe o nome" />
-                    </FormGroup>
-                    <FormGroup className="">
-                        <Label1 for="responsavel">Responsavel</Label1>
-                        <Input1 type="text" id="responsavel" onChange={e => setResponsavel (e.target.value)} value={responsavel} required="required" 
-                mask="999.999.999-99" placeholder="Informe o responsavel" />
-                    </FormGroup>
-                   
-                    <div class="row">
-          
-                    <FormGroup className="col-md-6" >
-                        <Label1 for="email">Email</Label1>
-                        <Input1 type="text" id="email" onChange={e => setEmail (e.target.value)} value={email} required="required" placeholder="Informe o e-mail" />
-                    </FormGroup>
-                    <FormGroup className="col-md-6">
-                        <Label1 for="telefone">Telefone</Label1>
-                        <Input1 type="text" id="telefone" onChange={e => setTelefone (e.target.value)} value={telefone} required="required" placeholder="Informe o telefone" 
-                        as={InputMask} mask="(99) 99999-9999"
-                        />
-                    </FormGroup>
-                    </div>
-                    <FormGroup >
-                        <Label1 for="endereco">Endereço</Label1>
-                        <Text1 type="text-area" id="endereco" onChange={e => setEndereco (e.target.value)} value={endereco} required="required" placeholder="Informe o endereço" />
-                    </FormGroup>
-          
-                    
-                   
-                    
-       
-        <div style={{flexDirection: "row", justifyContent: "space-between",display:'flex', alignItems:"center"}}>
-          
-          <Button style={{width:'35%' }} color="danger" onClick={()=> navigate('/clientes')}>
-            Cancelar
-          </Button>
-          <Button style={{width:'35%' }} color="success" onClick={handleSubmit}>
-           Adicionar usuario
-          </Button>
-        </div>
-    
-      </form>
-                </ContainerGeral>
+  return (<>
+    <Sidebar />
+
+    <div style={{ flexDirection: "column", margin: '0px', padding: '0px', width: '100%' }}>
+      <Topbar title="Novo Cliente" />
+
+      <ContainerGeral >
+        <form onSubmit={handleSubmit}>
 
 
-                </div>
-            
-            </>
-        );
-    }
+          <FormGroup>
+            <Label1 for="nome">Nome</Label1>
+            <Input1 type="text" id="nome" onChange={e => setNome(e.target.value)} value={nome} required="required" placeholder="Informe o nome" />
+          </FormGroup>
+          <FormGroup className="">
+            <Label1 for="responsavel">Responsavel</Label1>
+            <Input1 type="text" id="responsavel" onChange={e => setResponsavel(e.target.value)} value={responsavel} required="required"
+              mask="999.999.999-99" placeholder="Informe o responsavel" />
+          </FormGroup>
+
+          <div class="row">
+
+            <FormGroup className="col-md-6" >
+              <Label1 for="email">Email</Label1>
+              <Input1 type="text" id="email" onChange={e => setEmail(e.target.value)} value={email} required="required" placeholder="Informe o e-mail" />
+            </FormGroup>
+            <FormGroup className="col-md-6">
+              <Label1 for="telefone">Telefone</Label1>
+              <Input1 type="text" id="telefone" onChange={e => setTelefone(e.target.value)} value={telefone} required="required" placeholder="Informe o telefone"
+                as={InputMask} mask="(99) 99999-9999"
+              />
+            </FormGroup>
+          </div>
+          <FormGroup >
+            <Label1 for="endereco">Endereço</Label1>
+            <Text1 type="text-area" id="endereco" onChange={e => setEndereco(e.target.value)} value={endereco} required="required" placeholder="Informe o endereço" />
+          </FormGroup>
+
+
+
+
+
+          <div style={{ flexDirection: "row", justifyContent: "space-between", display: 'flex', alignItems: "center" }}>
+
+            <Button style={{ width: '35%' }} color="danger" onClick={() => navigate('/clientes')}>
+              Cancelar
+            </Button>
+            <Button style={{ width: '35%' }} color="success" onClick={handleSubmit}>
+              Adicionar Cliente
+            </Button>
+          </div>
+
+        </form>
+      </ContainerGeral>
+
+
+    </div>
+
+  </>
+  );
+}
 export default AddCliente

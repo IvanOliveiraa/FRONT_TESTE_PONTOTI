@@ -32,9 +32,16 @@ const BotaoGerarProposta = ({ id }) => {
 
 
   function geraProposta(id) {
-    axios.get(`/orcamento/gerarproposta/${id}`)
-    setModaldl(false);
-    window.location.reload(1)
+    axios.get(`/orcamento/gerarproposta/${id}`).then((response) => {
+      // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+      setModaldl(false);
+      window.location.reload(1)
+    })
+      .catch((error) => {
+        console.error("Houve um erro ao gerar a proposta", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
+
 
   }
 

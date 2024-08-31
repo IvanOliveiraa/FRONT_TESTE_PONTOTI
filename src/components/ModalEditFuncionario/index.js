@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from "react-input-mask";
 
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup } from 'reactstrap';
 import styled from 'styled-components';
 import axios from '../../api/axios';
 
@@ -85,9 +85,15 @@ const BotaoEdit = ({ id1, email1, nome1, cpf1, telefone1, senha1, nivel1 }) => {
         'Content-Type': 'application/json'
       }),
     };
-    axios.put(`/usuario/update/${id1}`, datafunc);
-    setModal(false);
-    window.location.reload(1)
+    axios.put(`/usuario/update/${id1}`, datafunc).then((response) => {
+      // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+      setModal(false);
+      window.location.reload(1);  // Recarrega a página após a conclusão da requisição
+    })
+      .catch((error) => {
+        console.error("Houve um erro ao editar o usuario:", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
 
   }
 
@@ -132,9 +138,11 @@ const BotaoEdit = ({ id1, email1, nome1, cpf1, telefone1, senha1, nivel1 }) => {
             </FormGroup>
             <FormGroup>
               <Label1> Nivel</Label1>
-              <Input1 type='text' id="nivel" onChange={e => setNivel(e.target.value)} value={nivel}>
-
-              </Input1>
+              <Select1 type='select' id="nivel" onChange={e => setNivel(e.target.value)} value={nivel}>
+                <option >tecnico</option>
+                <option >administrativo</option>
+                <option >administrador</option>
+              </Select1>
             </FormGroup>
 
 
@@ -146,7 +154,7 @@ const BotaoEdit = ({ id1, email1, nome1, cpf1, telefone1, senha1, nivel1 }) => {
               Cancelar
             </Button>
             <Button style={{ width: '35%' }} color="success" onClick={handleSubmit}>
-              Adicionar usuario
+              Salvar
             </Button>
           </ModalFooter>
 

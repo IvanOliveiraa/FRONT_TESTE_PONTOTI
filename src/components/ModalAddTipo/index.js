@@ -46,7 +46,7 @@ const BotaoAdd = () => {
       .then((response) => {
         // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
         setModal(false);
-        window.location.reload();  // Recarrega a página após a conclusão da requisição
+        window.location.reload(1);  // Recarrega a página após a conclusão da requisição
       })
       .catch((error) => {
         console.error("Houve um erro ao adicionar o atendimento:", error);

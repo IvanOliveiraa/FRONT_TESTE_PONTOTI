@@ -44,12 +44,14 @@ const Input1 = styled.input`
 `;
 
 const customStyles = {
+
   option: (provided, state) => ({
     ...provided,
     border: '0.5px solid #A9A9A9',
-    color: state.isFocused ? 'white' : 'black',
+    color: state.isSelected ? 'white' : state.isFocused ? '#0275d8' : 'black',
     backgroundColor: state.isSelected ? '#0275d8' : '#white',
     borderColor: state.isFocused ? '#0275d8' : '#A9A9A9'
+
   }),
   control: (provided) => ({
     ...provided,
@@ -57,21 +59,7 @@ const customStyles = {
   })
 };
 
-const Select1 = styled(AsyncSelect)`
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    
-    &:focus {
-      outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-`;
+
 
 const Text1 = styled.textarea`
     font-size: 1rem;
@@ -140,9 +128,15 @@ const BotaoAdd = () => {
       valor
     };
 
-    axios.post('/orcamento/insert', dataOrcamento)
-      .then(() => window.location.reload(1))
-      .catch((error) => console.log(error));
+    axios.post('/orcamento/insert', dataOrcamento).then((response) => {
+      // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+      setModal(false);
+      window.location.reload(1);  // Recarrega a página após a conclusão da requisição
+    })
+      .catch((error) => {
+        console.error("Houve um erro ao adicionar orcamento:", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
   }
 
   return (

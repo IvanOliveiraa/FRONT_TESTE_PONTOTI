@@ -105,7 +105,7 @@ const BotaoAddTarefa = ({ atendimento }) => {
 
   const [data, setData] = useState('');
   const [hora, setHora] = useState('');
-  const [prioridade, setPrioridade] = useState('');
+  const [prioridade, setPrioridade] = useState(0);
   const [abertura, setAbertura] = useState('');
 
 
@@ -165,8 +165,15 @@ const BotaoAddTarefa = ({ atendimento }) => {
     };
     */
 
-    axios.post('/tarefa/insert', datafunc);
-    window.location.reload(1);
+    axios.post('/tarefa/insert', datafunc).then((response) => {
+      // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+      setModal(false);
+      window.location.reload(1);  // Recarrega a página após a conclusão da requisição
+    })
+      .catch((error) => {
+        console.error("Houve um erro ao editar o atendimento:", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
 
 
   }

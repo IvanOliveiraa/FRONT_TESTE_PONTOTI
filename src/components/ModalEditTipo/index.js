@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from "react-input-mask";
 
-import { Button,Modal,ModalBody,ModalFooter,ModalHeader, Form,FormGroup,Label,Input } from 'reactstrap'; 
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
 import styled from 'styled-components';
 import axios from '../../api/axios';
 
@@ -10,7 +10,7 @@ color: #303030;
 font-size: 16px;
     `;
 
-    const Input1 = styled.input`
+const Input1 = styled.input`
     font-size: 1rem;
     width: 100%;
     padding: 5px 0px 5px 10px;
@@ -28,7 +28,7 @@ font-size: 16px;
     }
       }
     `;
-    const Select1 = styled.select`
+const Select1 = styled.select`
     font-size: 1rem;
     width: 100%;
     padding: 5px 0px 5px 10px;
@@ -59,66 +59,73 @@ font-size: 16px;
   }
 `;
 
-const BotaoEdit = ({id1, nome1 }) => {
-  
+const BotaoEdit = ({ id1, nome1 }) => {
+
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const[nome, setNome]= useState(nome1);
- 
+  const [nome, setNome] = useState(nome1);
 
-  
-  function handleSubmit(event){
+
+
+  function handleSubmit(event) {
     const datafunc = {
-      nome 
+      nome
     }
-    
+
     const Info = {
       method: 'put',
       body: JSON.stringify(datafunc),
       headers: new Headers({
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }),
-  };
-    axios.put(`/tipoatendimento/update/${id1}`,datafunc);
-    setModal(false);
-    window.location.reload(1)
-  
+    };
+    axios.put(`/tipoatendimento/update/${id1}`, datafunc)
+      .then((response) => {
+        // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
+        setModal(false);
+        window.location.reload(1);  // Recarrega a página após a conclusão da requisição
+      })
+      .catch((error) => {
+        console.error("Houve um erro ao editar o atendimento:", error);
+        // Aqui você pode adicionar alguma lógica para tratar erros, se necessário
+      });
+
   }
- 
+
   return (
     <>
-      
-      <Button  color="primary"size="sm"style={{marginLeft:'10px'}} onClick={toggle}>Editar</Button>
+
+      <Button color="primary" size="sm" style={{ marginLeft: '10px' }} onClick={toggle}>Editar</Button>
       <Form onSubmit={handleSubmit}>
-      <Modal  centered
-    fullscreen="lg"
-    scrollable isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Editar Tipo de Atendimento</ModalHeader>
-        
-        <ModalBody style={{  }}>
-          
-                    <FormGroup>
-                        <Label1 for="Nome">Nome</Label1>
-                        <Input1 type="text" id="nome" onChange={e => setNome (e.target.value)} value={nome} required="required" placeholder="Informe o nome" />
-                    </FormGroup>        
-                   
-                    
-        </ModalBody>
-        <ModalFooter style={{justifyContent:'space-evenly' }}>
-          
-          <Button style={{width:'35%' }} color="danger" onClick={toggle}>
-            Cancelar
-          </Button>
-          <Button style={{width:'35%' }} color="success" onClick={handleSubmit}>
-           Salvar
-          </Button>
-        </ModalFooter>
-        
-      </Modal>
+        <Modal centered
+          fullscreen="lg"
+          scrollable isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Editar Tipo de Atendimento</ModalHeader>
+
+          <ModalBody style={{}}>
+
+            <FormGroup>
+              <Label1 for="Nome">Nome</Label1>
+              <Input1 type="text" id="nome" onChange={e => setNome(e.target.value)} value={nome} required="required" placeholder="Informe o nome" />
+            </FormGroup>
+
+
+          </ModalBody>
+          <ModalFooter style={{ justifyContent: 'space-evenly' }}>
+
+            <Button style={{ width: '35%' }} color="danger" onClick={toggle}>
+              Cancelar
+            </Button>
+            <Button style={{ width: '35%' }} color="success" onClick={handleSubmit}>
+              Salvar
+            </Button>
+          </ModalFooter>
+
+        </Modal>
       </Form>
     </>
   );
-  };
+};
 
-export default BotaoEdit ;
+export default BotaoEdit;

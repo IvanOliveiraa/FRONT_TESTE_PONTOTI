@@ -3,6 +3,7 @@ import { Table } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
 import Topbar from '../../components/Topbar';
 //import BotaoDelete from '../../components/ModalDeleteOrcamento';
+import moment from 'moment';
 import useAxios from '../../hooks/useAxios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -93,7 +94,7 @@ const Orcamentos = () => {
                                                 <td>{orcamento.nome_cliente}</td>
                                                 <td>{orcamento.nome_atendimento}</td>
                                                 <td>{orcamento.valor}</td>
-                                                <td>{orcamento.data_validade}</td>
+                                                <td>{moment(orcamento.data_validade).format('DD/MM/YYYY')}</td>
                                                 <td>{orcamento.status}</td>
                                                 <td style={{ alignItems: 'right', justifyContent: 'center' }}>
                                                     {
