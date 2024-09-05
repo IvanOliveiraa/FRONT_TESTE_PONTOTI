@@ -40,7 +40,7 @@ const Orcamentos = () => {
     let navigate = useNavigate();
     const { nivel } = useAuth();
 
-    const { data, mutate } = useAxios('/orcamentos');
+    const { data } = useAxios('/orcamentos');
 
     useEffect(() => {
         if (localStorage.getItem('nivel') == null) {

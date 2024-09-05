@@ -1,4 +1,4 @@
-import {React,useEffect} from 'react';
+import { React, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
 import Topbar from '../../components/Topbar';
@@ -21,19 +21,8 @@ width :96%;
 justify-Content:"center";
 box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 6px, rgba(0, 0, 0, 0.2) 0px 3px 10px
 `;
-const BotaoNovo = styled.button`
-background: #F38439;
-border: none;
-margin:0px;
-border-Radius: 3px;
-padding: 7px 15px;
-font-Weight: bold ;
-color: white;
-&:hover {
-    background: #f27018; 
-}
-`;
-const ContainerTop= styled.div`{
+
+const ContainerTop = styled.div`{
   margin: 5px 10px 5px 10px;
   grid-column: 1 / 6;
 display: grid;
@@ -46,152 +35,152 @@ display: grid;
 
 
 
-const Tipos= ()=> {
+const Tipos = () => {
 
     let navigate = useNavigate();
-    const {nivel}=useAuth();
-    
-    const{data,mutate}= useAxios('/tiposatendimentos');
-    
-    useEffect(()=>{
-        if(localStorage.getItem('nivel') == null) {
-            navigate("/");   
-        }else{
+    const { nivel } = useAuth();
+
+    const { data } = useAxios('/tiposatendimentos');
+
+    useEffect(() => {
+        if (localStorage.getItem('nivel') == null) {
+            navigate("/");
+        } else {
             var nivel2 = localStorage.getItem('nivel');
-    
-             if(nivel2 === 'tecnico'){
+
+            if (nivel2 === 'tecnico') {
                 navigate("/atendimentostecnico");
-                }
-                else{
-                    console.log("ok") ;
-                }      
+            }
+            else {
+                console.log("ok");
+            }
         }
-        },[])
+    }, [navigate])
 
-   if (nivel === 'administrador') {
-    return (<>
-        <Sidebar/>      
+    if (nivel === 'administrador') {
+        return (<>
+            <Sidebar />
 
-    <div style={{ flexDirection: "column", margin:'0px',padding:'0px', width :'100%'}}>
-      
-             <Topbar title="Tipos de Atendimento"/>
-             <ContainerTop>
-             <BotaoAdd/>
-             </ContainerTop>
-       <ContainerGeral>
-             
-             
-             <hr my-3/>
-             <div table-responsive style={{width:'100%',borderRadius:'6px',boxShadow: " #9E9E9E 0.30 0px 3px 5px"}}>
-                 <Table dark bordered hover>
-                     <thead>
-                         <tr>
-                         <th>Nome</th>
-                         <th>Ações</th>
-                         
-                         </tr>
-                     </thead>
-                     <tbody>
-                         
-                         {data?.map((tipos)=>{
-                             return(
-                                 <tr key={tipos.id}>
-                         
-                         <td>{tipos.nome_atendimento}</td>
-                         <td style={{alignItems:'rigth', justifyContent:'center'}} >
-                         
-                         { /* botao  para ir pra pagina de editar funcionario
+            <div style={{ flexDirection: "column", margin: '0px', padding: '0px', width: '100%' }}>
+
+                <Topbar title="Tipos de Atendimento" />
+                <ContainerTop>
+                    <BotaoAdd />
+                </ContainerTop>
+                <ContainerGeral>
+
+
+                    <hr my-3 />
+                    <div table-responsive style={{ width: '100%', borderRadius: '6px', boxShadow: " #9E9E9E 0.30 0px 3px 5px" }}>
+                        <Table dark bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Ações</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {data?.map((tipos) => {
+                                    return (
+                                        <tr key={tipos.id}>
+
+                                            <td>{tipos.nome_atendimento}</td>
+                                            <td style={{ alignItems: 'rigth', justifyContent: 'center' }} >
+
+                                                { /* botao  para ir pra pagina de editar funcionario
                           <Button  color="primary"size="sm"style={{marginLeft:'10px'}} onClick={()=>navigate(`/editarfuncionario/${funcionarios.id}`)}> 
                          Editar
                          </Button> */}
-                         
-                         <BotaoDelete id={tipos.id}/>
 
-                         <BotaoEdit id1={tipos.id}
-                          nome1 ={tipos.nome_atendimento}
-                          />
-                         
-                         </td>
-                         </tr>
-                             );
-                         })}
-                         
-                     </tbody>
-                     </Table>
-                     </div>
+                                                <BotaoDelete id={tipos.id} />
 
-             </ContainerGeral>
-             </div>
-            
-         
-         </>
-     );
+                                                <BotaoEdit id1={tipos.id}
+                                                    nome1={tipos.nome_atendimento}
+                                                />
 
-   }else if(nivel === 'administrativo'){
-    return (<>
-        <Sidebar/>      
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
 
-    <div style={{ flexDirection: "column", margin:'0px',padding:'0px', width :'100%'}}>
-      
-             <Topbar title="Tipos de Atendimento"/>
-             <ContainerTop>
-             <BotaoAdd/>
-             </ContainerTop>
-       <ContainerGeral>
-             
-             
-             <hr my-3/>
-             <div table-responsive style={{width:'100%',borderRadius:'6px',boxShadow: " #9E9E9E 0.30 0px 3px 5px"}}>
-                 <Table dark bordered hover>
-                     <thead>
-                         <tr>
-                         <th>Nome</th>
-                         <th>Ações</th>
-                         
-                         </tr>
-                     </thead>
-                     <tbody>
-                         
-                         {data?.map((tipos)=>{
-                             return(
-                                 <tr key={tipos.id}>
-                         
-                         <td>{tipos.nome_atendimento}</td>
-                         <td style={{alignItems:'rigth', justifyContent:'center'}} >
-                         
-                         { /* botao  para ir pra pagina de editar funcionario
+                            </tbody>
+                        </Table>
+                    </div>
+
+                </ContainerGeral>
+            </div>
+
+
+        </>
+        );
+
+    } else if (nivel === 'administrativo') {
+        return (<>
+            <Sidebar />
+
+            <div style={{ flexDirection: "column", margin: '0px', padding: '0px', width: '100%' }}>
+
+                <Topbar title="Tipos de Atendimento" />
+                <ContainerTop>
+                    <BotaoAdd />
+                </ContainerTop>
+                <ContainerGeral>
+
+
+                    <hr my-3 />
+                    <div table-responsive style={{ width: '100%', borderRadius: '6px', boxShadow: " #9E9E9E 0.30 0px 3px 5px" }}>
+                        <Table dark bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Ações</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {data?.map((tipos) => {
+                                    return (
+                                        <tr key={tipos.id}>
+
+                                            <td>{tipos.nome_atendimento}</td>
+                                            <td style={{ alignItems: 'rigth', justifyContent: 'center' }} >
+
+                                                { /* botao  para ir pra pagina de editar funcionario
                           <Button  color="primary"size="sm"style={{marginLeft:'10px'}} onClick={()=>navigate(`/editarfuncionario/${funcionarios.id}`)}> 
                          Editar
                          </Button> */}
-                         
 
-                         <BotaoEdit id1={tipos.id}
-                          nome1 ={tipos.nome_atendimento}
-                          />
-                         
-                         </td>
-                         </tr>
-                             );
-                         })}
-                         
-                     </tbody>
-                     </Table>
-                     </div>
 
-             </ContainerGeral>
-             </div>
-            
-         
-         </>
-     );
-   }else{
-    return(
-        <Voltar/>
-    )
-   }
-   
-    
-    
-    
+                                                <BotaoEdit id1={tipos.id}
+                                                    nome1={tipos.nome_atendimento}
+                                                />
+
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+
+                            </tbody>
+                        </Table>
+                    </div>
+
+                </ContainerGeral>
+            </div>
+
+
+        </>
+        );
+    } else {
+        return (
+            <Voltar />
+        )
     }
+
+
+
+
+}
 export default Tipos

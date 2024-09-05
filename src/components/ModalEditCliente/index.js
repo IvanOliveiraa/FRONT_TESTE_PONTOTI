@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from "react-input-mask";
 
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup } from 'reactstrap';
 import styled from 'styled-components';
 import axios from '../../api/axios';
 
@@ -76,13 +76,6 @@ const BotaoEdit = ({ id1, email1, nome1, responsavel1, telefone1, endereco1 }) =
     const datafunc = {
       nome, email, responsavel, telefone, endereco
     }
-    const Info = {
-      method: 'put',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
     axios.put(`/cliente/update/${id1}`, datafunc).then((response) => {
       // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
       setModal(false);

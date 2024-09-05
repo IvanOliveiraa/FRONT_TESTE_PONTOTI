@@ -1,22 +1,22 @@
-import {React} from 'react';
+import { React } from 'react';
 
-import { Route, useNavigate,Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 
 const isAuth = () => {
-     
-    if(localStorage.getItem('token') != null) {
+
+    if (localStorage.getItem('token') != null) {
         return true
     }
     return false;
 };
 
- const ProtectedRoute=()=>{
-    let navigate= useNavigate();
-    return isAuth ?( <Outlet/>) : (navigate("/"));
-} 
+const ProtectedRoute = () => {
+    let navigate = useNavigate();
+    return isAuth ? (<Outlet />) : (navigate("/"));
+}
 
-const PrivateRoute = ({component: Component, ...rest}) => {
+/*const PrivateRoute = ({component: Component, ...rest}) => {
     return (
         <Route 
             {...rest}
@@ -35,5 +35,5 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     );
 }
 
-//export default PrivateRoute;
+//export default PrivateRoute; */
 export default ProtectedRoute;

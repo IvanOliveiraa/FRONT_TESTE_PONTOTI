@@ -80,7 +80,7 @@ export function AtendimentosTecnico() {
   const { iduser } = useAuth();
 
 
-  const { data, mutate } = useAxios(`/tarefashoje/${iduser}`);
+  const { data } = useAxios(`/tarefashoje/${iduser}`);
 
   const datas = useMemo(() => {
     return data || [];
@@ -88,11 +88,11 @@ export function AtendimentosTecnico() {
 
   const aguardando = useMemo(() => {
     return datas.filter((tarefas) => tarefas.status_tarefa === "aguardando" || tarefas.status_tarefa === "revisado");
-  }, [data])
+  }, [datas])
 
   const naoconcluido = useMemo(() => {
     return datas.filter((tarefas) => tarefas.status_tarefa !== "concluido" | tarefas.status_tarefa !== "aguardando" || tarefas.status_tarefa !== "revisado");
-  }, [data])
+  }, [datas])
 
 
 

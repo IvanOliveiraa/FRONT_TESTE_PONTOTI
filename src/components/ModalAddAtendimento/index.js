@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap';
 import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 import AsyncSelect from 'react-select/async';
 import Config from '../../config';
 
@@ -78,11 +76,11 @@ const Text1 = styled.textarea`
 
 
 const BotaoAdd = () => {
-  let navigate = useNavigate();
+
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const { register, handleSubmit, formState: { erros } } = useForm()
+
 
 
   const [selectCliente, setSelectCliente] = useState('');
@@ -159,13 +157,6 @@ const BotaoAdd = () => {
     console.log(datafunc);
 
 
-    const Info = {
-      method: 'POST',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
     axios.post('/atendimento/insert', datafunc).then((response) => {
       // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
       setModal(false);

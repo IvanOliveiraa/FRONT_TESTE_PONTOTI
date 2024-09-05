@@ -75,7 +75,7 @@ const Login = () => {
                 window.location.reload();
             }
         }
-    }, []);
+    }, [navigate]);
 
     const signIn = async (e) => {
         e.preventDefault(); // Impede o comportamento padrão do formulário

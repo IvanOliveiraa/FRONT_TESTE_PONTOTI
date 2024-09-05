@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup } from 'reactstrap';
 import styled from 'styled-components';
 import axios from '../../api/axios';
 import moment from 'moment';
@@ -20,23 +20,6 @@ const BotaoConfirma = styled.button`
   
   :hover {
     background: #4CAF50;
-  }
-`;
-
-const BotaoRevisar = styled.button`
-  border: none;
-  background: #f0ad4e;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: opacity 0.2s ease-out;
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-  width: 100%;
-  text-align: center;
-
-  :hover {
-    background: #ec971f;
   }
 `;
 

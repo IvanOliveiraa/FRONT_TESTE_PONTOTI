@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import InputMask from "react-input-mask";
 
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BotaoNovo = styled.button`
@@ -23,7 +21,6 @@ color: white;
 
 
 const BotaoAdd = () => {
-  let navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
@@ -35,13 +32,6 @@ const BotaoAdd = () => {
       nome
     }
 
-    const Info = {
-      method: 'POST',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
     axios.post('/tiposatendimentos/insert', datafunc)
       .then((response) => {
         // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário

@@ -78,13 +78,7 @@ const BotaoEdit = ({ id1, email1, nome1, cpf1, telefone1, senha1, nivel1 }) => {
       nome, email, cpf, telefone, senha, nivel
     }
 
-    const Info = {
-      method: 'put',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
+
     axios.put(`/usuario/update/${id1}`, datafunc).then((response) => {
       // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
       setModal(false);

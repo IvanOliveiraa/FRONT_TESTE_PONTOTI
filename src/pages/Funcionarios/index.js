@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import BotaoEdit from '../../components/ModalEditFuncionario';
 import styled from 'styled-components';
 import useAuth from '../../hooks/useAuth';
-import Button from 'reactstrap';
 import Voltar from '../naoautorizada';
 
 
@@ -66,7 +65,7 @@ const Funcionarios = () => {
     let navigate = useNavigate();
     const { nivel } = useAuth();
 
-    const { data, mutate } = useAxios('/usuarios');
+    const { data } = useAxios('/usuarios');
 
     useEffect(() => {
         if (localStorage.getItem('nivel') == null) {
@@ -81,7 +80,7 @@ const Funcionarios = () => {
                 console.log("ok");
             }
         }
-    }, [])
+    }, [navigate])
     if (nivel === 'administrador') {
         return (<>
             <Sidebar />

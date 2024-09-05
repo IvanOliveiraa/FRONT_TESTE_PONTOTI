@@ -74,19 +74,6 @@ const Select1 = styled.select`
     }
   }
 `;
-const Text1 = styled.textarea`
-background: #212324;
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    &:focus {
-    outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }`;
 
 
 
@@ -105,13 +92,7 @@ export function AddFuncionario() {
       nome, email, cpf, telefone, senha, nivel
     }
 
-    const Info = {
-      method: 'POST',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
+
     axios.post('/usuario/insert', datafunc).then((response) => {
       // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
       navigate("/funcionarios")

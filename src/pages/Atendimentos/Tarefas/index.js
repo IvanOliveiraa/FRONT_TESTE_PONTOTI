@@ -13,28 +13,7 @@ import useAuth from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Voltar from '../../naoautorizada';
 
-const ContainerAdd = styled.button`{
-  display: inline-block;
-  font-size: 20px;
-  color:white;
-  border: 2px solid #4f5659;
-  font-weight: bold;
-  vertical-align: top;
-  margin-bottom:10px;
-  width: 170px;
-  height: 100px;
-  border: none;
-  transition: transform .2s;
-  
-  text-decoration: none;
-  border-radius: 5px;
-  background: ${(props) => (props.prioridade ? "#1a1a1a" : "#1a1a1a")};
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  :hover{
-    box-shadow: rgba(0, 0, 0, 0.3) 1px 2px 6px, rgba(0, 0, 0, 0.5) 0px 2px 4px;
-  }
-  
-}`;
+
 
 const ContainerGeral = styled.div`
 border-Radius: 10px;
@@ -79,7 +58,7 @@ const Tarefas = () => {
       setAtendimento(atendimentoData);
     };
     fetchPosts();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (localStorage.getItem('nivel') == null) {
@@ -94,7 +73,7 @@ const Tarefas = () => {
         console.log("ok");
       }
     }
-  }, [])
+  }, [navigate])
 
   if (nivel === 'administrador' || nivel === 'administrativo') {
     return (<>

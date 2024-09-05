@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import InputMask from "react-input-mask";
 
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup } from 'reactstrap';
 import styled from 'styled-components';
 import axios from '../../api/axios';
 
@@ -28,36 +27,6 @@ const Input1 = styled.input`
     }
       }
     `;
-const Select1 = styled.select`
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    &:focus {
-    outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-      
-
-  option {
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    &:focus {
-    outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-  }
-`;
 
 const BotaoEdit = ({ id1, nome1 }) => {
 
@@ -73,13 +42,6 @@ const BotaoEdit = ({ id1, nome1 }) => {
       nome
     }
 
-    const Info = {
-      method: 'put',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
     axios.put(`/tipoatendimento/update/${id1}`, datafunc)
       .then((response) => {
         // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário

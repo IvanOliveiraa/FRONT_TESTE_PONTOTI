@@ -24,7 +24,7 @@ export const HeaderCard = styled.div`{
   width:100%;
   text-align:center;
   justify: center;
-  color: ${(props) => (props.prioridade==1 ? "#fce6b1" : "white")};
+  color: ${(props) => (props.prioridade === 1 ? "#fce6b1" : "white")};
 
 }`;
 export const Bodycard = styled.div`{

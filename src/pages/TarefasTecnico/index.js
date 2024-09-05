@@ -1,13 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Topbar from '../../components/Topbar';
 import styled from 'styled-components';
 import useAxios from '../../hooks/useAxios';
 import CardTarefa from '../../components/CardTarefa';
-import Config from '../../config';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Voltar from '../naoautorizada';

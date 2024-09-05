@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { useState } from 'react';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input, Body, Footer } from 'reactstrap';
+import { Button, FormGroup } from 'reactstrap';
 import axios from '../../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/Sidebar';
@@ -44,37 +43,7 @@ const Input1 = styled.input`
     }
       }
     `;
-const Select1 = styled.select`
-    color:#d9d4cc;
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #212324;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    &:focus {
-      outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-      
 
-  option {
-    font-size: 1rem;
-    width: 100%;
-    padding: 5px 0px 5px 10px;
-    margin: 0px;
-    background: #F5F5F5;
-    border-radius: 3px;
-    border: 0.5px solid #A9A9A9;
-    &:focus {
-      outline: none;
-    border-color: #0275d8;
-    box-shadow: rgba(2, 117, 216, 0.25) 0px 2px 5px -1px, rgba(2, 117, 216, 0.3) 0px 1px 3px -1px;
-    }
-  }
-`;
 const Text1 = styled.textarea`
 background: #212324;
     font-size: 1rem;
@@ -104,13 +73,7 @@ export function AddCliente() {
       nome, email, responsavel, telefone, endereco
     }
 
-    const Info = {
-      method: 'POST',
-      body: JSON.stringify(datafunc),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    };
+
     axios.post('/cliente/insert', datafunc).then((response) => {
       // Aqui você pode verificar a resposta e tomar alguma ação específica, se necessário
       navigate("/clientes")

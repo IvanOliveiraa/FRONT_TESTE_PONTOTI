@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, } from 'reactstrap';
 import axios from '../../api/axios';
 import styled from 'styled-components';
-import { IoTrashBin } from "react-icons/io5";
 
 const BotaoDeletar = styled.button`{
   border:none;
